@@ -1,7 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* Custom styles */
 html {
@@ -63,3 +61,58 @@ textarea:focus {
   background: #4f46e5;
 }
 
+/* ============================================
+   SCROLL ANIMATIONS
+   ============================================ */
+
+/* Base animation state - hidden */
+.scroll-animate {
+  opacity: 0;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Fade up animation */
+.scroll-fade-up {
+  transform: translateY(30px);
+}
+
+/* Fade in from left */
+.scroll-fade-left {
+  transform: translateX(-30px);
+}
+
+/* Fade in from right */
+.scroll-fade-right {
+  transform: translateX(30px);
+}
+
+/* Scale up animation */
+.scroll-scale-up {
+  transform: scale(0.95);
+}
+
+/* Visible state - triggered by intersection observer */
+.scroll-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+/* Staggered animations for grid items */
+.grid > .scroll-animate:nth-child(1) { transition-delay: 0s; }
+.grid > .scroll-animate:nth-child(2) { transition-delay: 0.1s; }
+.grid > .scroll-animate:nth-child(3) { transition-delay: 0.2s; }
+.grid > .scroll-animate:nth-child(4) { transition-delay: 0.3s; }
+.grid > .scroll-animate:nth-child(5) { transition-delay: 0.4s; }
+.grid > .scroll-animate:nth-child(6) { transition-delay: 0.5s; }
+.grid > .scroll-animate:nth-child(7) { transition-delay: 0.6s; }
+.grid > .scroll-animate:nth-child(8) { transition-delay: 0.7s; }
+.grid > .scroll-animate:nth-child(9) { transition-delay: 0.8s; }
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-animate {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
