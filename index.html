@@ -1,341 +1,800 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Senthilkumar | FullStack Developer</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="./public/output.css" rel="stylesheet">
-    <link rel="stylesheet" href="./public/styles.css">
-    <link rel="stylesheet" href="/node_modules/particles.js/demo/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-    <script src="./public/app.js" defer></script>
-   
-</head>
-<body class="bg-gray-50 text-gray-800" ng-app="portfolioApp" ng-controller="MainController">
+    <link rel="stylesheet" href="./output.css" />
+    <link rel="stylesheet" href="./public/styles.css" />
 
+    <style>
+      .flip-card {
+        perspective: 1000px;
+    }
 
-  
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+        animation: autoFlip 10s infinite;
+    }
 
+    @keyframes autoFlip {
+        0%, 40% {
+            transform: rotateY(0deg);
+        }
+        50%, 90% {
+            transform: rotateY(180deg);
+        }
+        100% {
+            transform: rotateY(360deg);
+        }
+    }
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+
+    .flip-card-back {
+        transform: rotateY(180deg);
+    }
+
+    /* Optional: Pause animation on hover */
+    .flip-card:hover .flip-card-inner {
+        animation-play-state: paused;
+    }
+
+      #back-to-top {
+        transition: opacity 300ms ease, transform 300ms ease;
+      }
+
+      #back-to-top.show {
+        opacity: 1 !important;
+        transform: scale(1) !important;
+      }
+      @keyframes rotateImage {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .rotating {
+        animation: rotateImage 1s ease-in-out;
+      }
+    </style>
+    <script>
+      (function () {
+        const storedTheme = localStorage.getItem("theme");
+        if (storedTheme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+  </head>
+  <body
+    class="bg-red dark:bg-gray-900 text-gray-800 dark:text-gray-100 overflow-x-hidden"
+    ng-app="portfolioApp"
+    ng-controller="MainController"
+  >
+    <!-- Theme Toggle Button -->
+    <button
+      id="themeToggle"
+      class="fixed z-50 top-72 right-6 w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-gray-700 dark:to-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110"
+      onclick="toggleTheme(event)"
+      aria-label="Toggle dark mode"
+      title="Toggle dark/light mode"
+    >
+      <i
+        class="fas fa-sun text-white text-lg absolute transition-all duration-300 transform rotate-0 scale-100 dark:rotate-90 dark:scale-0"
+      ></i>
+      <i
+        class="fas fa-moon text-white text-lg absolute transition-all duration-300 transform -rotate-90 scale-0 dark:rotate-0 dark:scale-100"
+      ></i>
+    </button>
 
     <!-- Navigation -->
-    <nav class="bg-white shadow-md fixed w-full z-10">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <a href="#" class="text-2xl font-bold text-indigo-600">SK</a>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="hover:text-indigo-600 transition">Home</a>
-                    <a href="#about" class="hover:text-indigo-600 transition">About</a>
-                    <a href="#skills" class="hover:text-indigo-600 transition">Skills</a>
-                    <a href="#projects" class="hover:text-indigo-600 transition">Projects</a>
-                    <a href="#experience" class="hover:text-indigo-600 transition">Experience</a>
-                    <a href="#contact" class="hover:text-indigo-600 transition">Contact</a>
-                </div>
-                <button class="md:hidden focus:outline-none" ng-click="toggleMenu()">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
+    <nav
+      class="bg-white dark:bg-gray-800 shadow-md fixed w-full z-10 border-b dark:border-gray-700"
+    >
+      <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+          <a
+            href="#"
+            class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 scroll-animate scroll-fade-left"
+            >SK</a
+          >
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="#home"
+              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
+              >Home</a
+            >
+            <a
+              href="#about"
+              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
+              >About</a
+            >
+            <a
+              href="#skills"
+              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
+              >Skills</a
+            >
+            <a
+              href="#projects"
+              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
+              >Projects</a
+            >
+            <a
+              href="#experience"
+              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
+              >Experience</a
+            >
+            <a
+              href="#contact"
+              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
+              >Contact</a
+            >
+          </div>
+          <button
+            class="md:hidden focus:outline-none text-gray-800 dark:text-gray-200"
+            ng-click="toggleMenu()"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
         </div>
-        <!-- Mobile menu -->
-        <div class="md:hidden" ng-show="mobileMenuOpen">
-            <div class="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg">
-                <a href="#home" class="block px-3 py-2 hover:bg-indigo-50 hover:text-indigo-600 rounded-md" ng-click="toggleMenu()">Home</a>
-                <a href="#about" class="block px-3 py-2 hover:bg-indigo-50 hover:text-indigo-600 rounded-md" ng-click="toggleMenu()">About</a>
-                <a href="#skills" class="block px-3 py-2 hover:bg-indigo-50 hover:text-indigo-600 rounded-md" ng-click="toggleMenu()">Skills</a>
-                <a href="#projects" class="block px-3 py-2 hover:bg-indigo-50 hover:text-indigo-600 rounded-md" ng-click="toggleMenu()">Projects</a>
-                <a href="#experience" class="block px-3 py-2 hover:bg-indigo-50 hover:text-indigo-600 rounded-md" ng-click="toggleMenu()">Experience</a>
-                <a href="#contact" class="block px-3 py-2 hover:bg-indigo-50 hover:text-indigo-600 rounded-md" ng-click="toggleMenu()">Contact</a>
-            </div>
+      </div>
+      <!-- Mobile menu -->
+      <div class="md:hidden" ng-show="mobileMenuOpen">
+        <div
+          class="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-800 shadow-lg"
+        >
+          <a
+            href="#home"
+            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
+            ng-click="toggleMenu()"
+            >Home</a
+          >
+          <a
+            href="#about"
+            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
+            ng-click="toggleMenu()"
+            >About</a
+          >
+          <a
+            href="#skills"
+            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
+            ng-click="toggleMenu()"
+            >Skills</a
+          >
+          <a
+            href="#projects"
+            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
+            ng-click="toggleMenu()"
+            >Projects</a
+          >
+          <a
+            href="#experience"
+            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
+            ng-click="toggleMenu()"
+            >Experience</a
+          >
+          <a
+            href="#contact"
+            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
+            ng-click="toggleMenu()"
+            >Contact</a
+          >
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="pt-24 md:pt-32 pb-16 md:pb-24">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-8 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text">Hi, I'm <span class="text-indigo-600">Senthilkumar</span></h1>
-                    <h2 class="text-2xl md:text-3xl font-semibold mb-6">FullStack Developer</h2>
-                    <p class="text-lg text-gray-600 mb-8 ">I build responsive, user-friendly web applications with modern technologies.</p>
-                    <div class="flex space-x-4">
-                        <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-md transition text-nowrap ">Contact Me</a>
-                        <a href="#projects" class="border border-indigo-600 text-indigo-600 hover:bg-indigo-50 px-6 py-3 rounded-md transition text-nowrap" >View Projects</a>
-                    </div>
+   <section id="home" class="pt-24 md:pt-32 pb-16 md:pb-24 bg-gray-50 dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-gray-100 scroll-animate scroll-fade-left">Hi, I'm <span class="text-indigo-600 dark:text-indigo-400">Senthilkumar</span></h1>
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-700 dark:text-gray-200 scroll-animate scroll-fade-left">FullStack Developer</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 scroll-animate scroll-fade-up">I build responsive, user-friendly web applications with modern technologies.</p>
+                <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 scroll-animate scroll-fade-up">This portfolio was built using HTML, CSS, Tailwind CSS, and Angular.</p>
+                <div class="flex space-x-4">
+                    <a href="#contact" class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-6 py-3 rounded-md transition scroll-animate scroll-scale-up">Contact Me</a>
+                    <a href="#projects" class="border border-indigo-600 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-800 px-6 py-3 rounded-md transition scroll-animate scroll-scale-up">View Projects</a>
                 </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-indigo-100 flex items-center justify-center">
-                        <!-- <span class="text-6xl text-indigo-600">SK</span> -->
-                        <!-- Replace with your actual profile image -->
-                        <img src="./public/images/profile.jpg" alt="Senthilkumar" class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover">
+            </div>
+            <div class="md:w-1/2 flex justify-center scroll-animate scroll-fade-right">
+                <div class="flip-card w-64 h-64 md:w-80 md:h-80">
+                    <div class="flip-card-inner">
+                        <!-- Front Side - Profile Image -->
+                        <div class="flip-card-front">
+                            <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
+                                <img src="./public/images/profile.jpg" alt="Senthilkumar" class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover">
+                            </div>
+                        </div>
+                        <!-- Back Side - Download Button -->
+                        <div class="flip-card-back">
+                            <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-indigo-700 dark:to-purple-800 flex items-center justify-center shadow-2xl">
+                                <div class="text-center">
+                                    <svg class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                    <a href="./public/Senthilkumar_FullStack_Resume.pdf" download="Senthilkumar_Resume.pdf" class="inline-block bg-white dark:bg-gray-900 text-indigo-600 dark:text-indigo-400 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg">
+                                        Download Resume
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">About Me</h2>
-            <div class="max-w-3xl mx-auto">
-                <p class="text-lg text-gray-700 mb-6 1">
-                    I am a passionate FullStack Developer with expertise in building modern web applications. 
-                    With a strong foundation in both frontend and backend technologies, I create seamless, 
-                    user-friendly experiences that solve real-world problems.
-                </p>
-                <p class="text-lg text-gray-700 mb-6">
-                    My journey in web development started several years ago, and I've since worked on various 
-                    projects ranging from small business websites to complex enterprise applications. I enjoy 
-                    the challenge of learning new technologies and implementing best practices in my work.
-                </p>
-                <p class="text-lg text-gray-700">
-                    When I'm not coding, you can find me exploring new technologies, contributing to open-source 
-                    projects, or sharing my knowledge with the developer community.
-                </p>
-            </div>
+    <section id="about" class="py-16 bg-white dark:bg-gray-800">
+      <div class="container mx-auto px-4">
+        <h2
+          class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100"
+        >
+          About Me
+        </h2>
+        <div class="max-w-3xl mx-auto">
+          <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+            I am a passionate FullStack Developer with expertise in building
+            modern web applications. With a strong foundation in both frontend
+            and backend technologies, I create seamless, user-friendly
+            experiences that solve real-world problems.
+          </p>
+          <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+            My journey in web development started several years ago, and I've
+            since worked on various projects ranging from small business
+            websites to complex enterprise applications. I enjoy the challenge
+            of learning new technologies and implementing best practices in my
+            work.
+          </p>
+          <p class="text-lg text-gray-700 dark:text-gray-300">
+            When I'm not coding, you can find me exploring new technologies,
+            contributing to open-source projects, or sharing my knowledge with
+            the developer community.
+          </p>
         </div>
+      </div>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">My Skills</h2>
-            
-            <div class="max-w-4xl mx-auto">
-                <!-- Skill Categories -->
-                <div class="flex flex-wrap justify-center mb-8">
-                    <button 
-                        ng-repeat="category in skillCategories" 
-                        ng-click="filterSkills(category)" 
-                        class="m-2 px-4 py-2 rounded-full transition-all"
-                        ng-class="{'bg-indigo-600 text-white': selectedCategory === category, 'bg-white text-gray-700 hover:bg-indigo-100': selectedCategory !== category}">
-                        {{category}}
-                    </button>
-                </div>
-                
-                <!-- Skills Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <div ng-repeat="skill in filteredSkills" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition text-center">
-                        <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                            <img ng-src="{{skill.icon}}" alt="{{skill.name}}" class="max-w-full max-h-full">
-                        </div>
-                        <h3 class="font-semibold">{{skill.name}}</h3>
-                    </div>
-                </div>
+    <section id="skills" class="py-16 bg-gray-50 dark:bg-gray-900">
+      <div class="container mx-auto px-4">
+        <h2
+          class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100"
+        >
+          My Skills
+        </h2>
+
+        <div class="max-w-4xl mx-auto">
+          <!-- Skill Categories -->
+          <div class="flex flex-wrap justify-center mb-8">
+            <button
+              ng-repeat="category in skillCategories"
+              ng-click="filterSkills(category)"
+              class="m-2 px-4 py-2 rounded-full transition-all"
+              ng-class="selectedCategory === category ? 'bg-indigo-600 dark:bg-indigo-500 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600'"
+            >
+              {{category}}
+            </button>
+          </div>
+
+          <!-- Skills Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div
+              ng-repeat="skill in filteredSkills"
+              class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm hover:shadow-md transition text-center border border-gray-200 dark:border-gray-700"
+            >
+              <div
+                class="w-16 h-16 mx-auto mb-4 flex items-center justify-center"
+              >
+                <img
+                  ng-src="{{skill.icon}}"
+                  alt="{{skill.name}}"
+                  class="max-w-full max-h-full"
+                />
+              </div>
+              <h3 class="font-semibold text-gray-800 dark:text-gray-100">
+                {{skill.name}}
+              </h3>
             </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">My Projects</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div ng-repeat="project in projects" class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
-                    <div class="h-48 bg-gray-200 relative">
-                        <img ng-src="{{project.image}}" alt="{{project.title}}" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">{{project.title}}</h3>
-                        <p class="text-gray-600 mb-4">{{project.description}}</p>
-                        <div class="flex flex-wrap mb-4">
-                            <span ng-repeat="tech in project.technologies" class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded mr-2 mb-2">{{tech}}</span>
-                        </div>
-                        <div class="flex space-x-3">
-                            <a ng-href="{{project.liveUrl}}" target="_blank" class="text-indigo-600 hover:text-indigo-800">Live Demo</a>
-                            <a ng-href="{{project.codeUrl}}" target="_blank" class="text-indigo-600 hover:text-indigo-800">View Code</a>
-                        </div>
-                    </div>
-                </div>
+    <section id="projects" class="py-16 bg-white dark:bg-gray-800">
+      <div class="container mx-auto px-4">
+        <h2
+          class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100"
+        >
+          My Projects
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            ng-repeat="project in projects"
+            class="bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition border border-gray-200 dark:border-gray-600"
+          >
+            <div class="h-48 bg-gray-200 dark:bg-gray-600 relative">
+              <img
+                ng-src="{{project.image}}"
+                alt="{{project.title}}"
+                class="w-full h-full object-scale-down"
+              />
             </div>
+            <div class="p-6">
+              <h3
+                class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100"
+              >
+                {{project.title}}
+              </h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-3 text-sm">
+                {{project.description}}
+              </p>
+              <div class="flex flex-wrap mb-3">
+                <span
+                  ng-repeat="tech in project.technologies"
+                  class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs px-2 py-1 rounded mr-2 mb-2"
+                  >{{tech}}</span
+                >
+              </div>
+              <ul class="text-gray-700 dark:text-gray-300 text-sm space-y-1.5">
+                <li
+                  ng-repeat="detail in project.details"
+                  class="flex items-start"
+                >
+                  <span class="text-indigo-600 dark:text-indigo-400 mr-2"
+                    >•</span
+                  >
+                  <span>{{detail}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">Work Experience</h2>
-            
-            <div class="max-w-3xl mx-auto">
-                <div ng-repeat="job in experience" class="mb-12 relative pl-8 border-l-2 border-indigo-200">
-                    <div class="absolute -left-2 top-0 w-4 h-4 rounded-full bg-indigo-600"></div>
-                    <div class="mb-2">
-                        <span class="inline-block bg-indigo-100 text-indigo-800 text-sm px-3 py-1 rounded">{{job.period}}</span>
-                    </div>
-                    <h3 class="text-xl font-bold">{{job.title}}</h3>
-                    <h4 class="text-lg text-indigo-600 mb-2">{{job.company}}</h4>
-                    <p class="text-gray-700 mb-4">{{job.description}}</p>
-                    <ul class="list-disc list-inside text-gray-700">
-                        <li ng-repeat="responsibility in job.responsibilities">{{responsibility}}</li>
-                    </ul>
-                </div>
+    <section id="experience" class="py-16 bg-gray-50 dark:bg-gray-900">
+      <div class="container mx-auto px-4">
+        <h2
+          class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100"
+        >
+          Work Experience
+        </h2>
+
+        <div class="max-w-3xl mx-auto">
+          <div
+            ng-repeat="job in experience"
+            class="mb-12 relative pl-8 border-l-2 border-indigo-200 dark:border-indigo-800"
+          >
+            <div
+              class="absolute -left-2 top-0 w-4 h-4 rounded-full bg-indigo-600 dark:bg-indigo-500"
+            ></div>
+            <div class="mb-2">
+              <span
+                class="inline-block bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-sm px-3 py-1 rounded"
+                >{{job.period}}</span
+              >
             </div>
+            <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">
+              {{job.title}}
+            </h3>
+            <h4 class="text-lg text-indigo-600 dark:text-indigo-400 mb-2">
+              {{job.company}}
+            </h4>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              {{job.description}}
+            </p>
+            <ul class="list-disc list-inside text-gray-700 dark:text-gray-300">
+              <li ng-repeat="responsibility in job.responsibilities">
+                {{responsibility}}
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">Get In Touch</h2>
-            
-            <div class="max-w-3xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="text-indigo-600 mr-3">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium">Email</h4>
-                                    <p class="text-gray-600">senthil.codecraft@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="text-indigo-600 mr-3">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium">Phone</h4>
-                                    <p class="text-gray-600">+91 73588 03861</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="text-indigo-600 mr-3">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium">Location</h4>
-                                    <p class="text-gray-600">Walajapet, Tamil Nadu, India</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8">
-                            <h3 class="text-xl font-semibold mb-4">Connect With Me</h3>
-                            <div class="flex space-x-4">
-                                <a href="https://www.linkedin.com/in/senthilkumar-p-5304a2248?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="text-gray-600 hover:text-indigo-600 transition">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
-                                    </svg>
-                                </a>
-                                <a href="https://github.com/SenthilKumar-codecrafter" class="text-gray-600 hover:text-indigo-600 transition">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                </a>
-                                <a href="https://x.com/Senthil_Coder" class="text-gray-600 hover:text-indigo-600 transition">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-xl font-semibold mb-4">Send Me a Message</h3>
-                        <form name="contactForm" ng-submit="submitForm()" novalidate>
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 mb-2">Name</label>
-                                <input 
-                                    type="text" 
-                                    id="name" 
-                                    name="name" 
-                                    ng-model="formData.name" 
-                                    required
-                                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    ng-class="{'border-red-500': contactForm.name.$invalid && contactForm.name.$touched}"
-                                >
-                                <p ng-show="contactForm.name.$invalid && contactForm.name.$touched" class="text-red-500 text-sm mt-1">
-                                    Please enter your name
-                                </p>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label for="email" class="block text-gray-700 mb-2">Email</label>
-                                <input 
-                                    type="email" 
-                                    id="email" 
-                                    name="email" 
-                                    ng-model="formData.email" 
-                                    required
-                                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    ng-class="{'border-red-500': contactForm.email.$invalid && contactForm.email.$touched}"
-                                >
-                                <p ng-show="contactForm.email.$invalid && contactForm.email.$touched" class="text-red-500 text-sm mt-1">
-                                    Please enter a valid email address
-                                </p>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label for="message" class="block text-gray-700 mb-2">Message</label>
-                                <textarea 
-                                    id="message" 
-                                    name="message" 
-                                    ng-model="formData.message" 
-                                    required
-                                    rows="5"
-                                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    ng-class="{'border-red-500': contactForm.message.$invalid && contactForm.message.$touched}"
-                                ></textarea>
-                                <p ng-show="contactForm.message.$invalid && contactForm.message.$touched" class="text-red-500 text-sm mt-1">
-                                    Please enter your message
-                                </p>
-                            </div>
-                            
-                            <button 
-                                type="submit" 
-                                class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-md transition w-full"
-                                ng-disabled="contactForm.$invalid"
-                            >
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
+    <section id="contact" class="py-16 bg-white dark:bg-gray-800">
+      <div class="container mx-auto px-4">
+        <h2
+          class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100"
+        >
+          Get In Touch
+        </h2>
+
+        <div class="max-w-3xl mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3
+                class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100"
+              >
+                Contact Information
+              </h3>
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <div class="text-indigo-600 dark:text-indigo-400 mr-3">
+                    <svg
+                      class="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-gray-800 dark:text-gray-100">
+                      Email
+                    </h4>
+                    <p class="text-gray-600 dark:text-gray-400">
+                      senthil.codecraft@gmail.com
+                    </p>
+                  </div>
                 </div>
+                <div class="flex items-start">
+                  <div class="text-indigo-600 dark:text-indigo-400 mr-3">
+                    <svg
+                      class="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-gray-800 dark:text-gray-100">
+                      Phone
+                    </h4>
+                    <p class="text-gray-600 dark:text-gray-400">
+                      +91 73588 03861
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div class="text-indigo-600 dark:text-indigo-400 mr-3">
+                    <svg
+                      class="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      ></path>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-gray-800 dark:text-gray-100">
+                      Location
+                    </h4>
+                    <p class="text-gray-600 dark:text-gray-400">
+                      Walajapet, Tamil Nadu, India
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8">
+                <h3
+                  class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100"
+                >
+                  Connect With Me
+                </h3>
+                <div class="flex space-x-4">
+                  <a
+                    href="https://www.linkedin.com/in/senthilkumar-p-5304a2248"
+                    class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+                  >
+                    <svg
+                      class="w-6 h-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://github.com/SenthilKumar-codecrafter"
+                    class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+                  >
+                    <svg
+                      class="w-6 h-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://x.com/Senthil_Coder"
+                    class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+                  >
+                    <svg
+                      class="w-6 h-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
             </div>
+
+            <div>
+              <h3
+                class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100"
+              >
+                Send Me a Message
+              </h3>
+              <form name="contactForm" ng-submit="submitForm()" novalidate>
+                <div class="mb-4">
+                  <label
+                    for="name"
+                    class="block text-gray-700 dark:text-gray-300 mb-2"
+                    >Name</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    ng-model="formData.name"
+                    required
+                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100"
+                    ng-class="{'border-red-500': contactForm.name.$invalid && contactForm.name.$touched}"
+                  />
+                  <p
+                    ng-show="contactForm.name.$invalid && contactForm.name.$touched"
+                    class="text-red-500 text-sm mt-1"
+                  >
+                    Please enter your name
+                  </p>
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    for="email"
+                    class="block text-gray-700 dark:text-gray-300 mb-2"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    ng-model="formData.email"
+                    required
+                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100"
+                    ng-class="{'border-red-500': contactForm.email.$invalid && contactForm.email.$touched}"
+                  />
+                  <p
+                    ng-show="contactForm.email.$invalid && contactForm.email.$touched"
+                    class="text-red-500 text-sm mt-1"
+                  >
+                    Please enter a valid email address
+                  </p>
+                </div>
+
+                <div class="mb-4">
+                  <label
+                    for="message"
+                    class="block text-gray-700 dark:text-gray-300 mb-2"
+                    >Message</label
+                  >
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Enter your message"
+                    ng-model="formData.message"
+                    required
+                    rows="5"
+                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100"
+                    ng-class="{'border-red-500': contactForm.message.$invalid && contactForm.message.$touched}"
+                  ></textarea>
+                  <p
+                    ng-show="contactForm.message.$invalid && contactForm.message.$touched"
+                    class="text-red-500 text-sm mt-1"
+                  >
+                    Please enter your message
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-6 py-3 rounded-md transition w-full"
+                  ng-disabled="contactForm.$invalid"
+                >
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <a href="#" class="text-2xl font-bold">Senthilkumar</a>
-                    <p class="text-gray-400 mt-2">FullStack Developer</p>
-                </div>
-                
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="#home" class="hover:text-indigo-400 transition">Home</a>
-                    <a href="#about" class="hover:text-indigo-400 transition">About</a>
-                    <a href="#skills" class="hover:text-indigo-400 transition">Skills</a>
-                    <a href="#projects" class="hover:text-indigo-400 transition">Projects</a>
-                    <a href="#experience" class="hover:text-indigo-400 transition">Experience</a>
-                    <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; {{currentYear}} Senthilkumar. All rights reserved.</p>
-            </div>
+    <footer
+      class="bg-gray-800 dark:bg-gray-950 text-white py-8 border-t dark:border-gray-800"
+    >
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-4 md:mb-0">
+            <a href="#" class="text-2xl font-bold text-indigo-400"
+              >Senthilkumar</a
+            >
+            <p class="text-gray-400 dark:text-gray-500 mt-2">
+              FullStack Developer
+            </p>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-4">
+            <a
+              href="#home"
+              class="text-gray-300 hover:text-indigo-400 transition"
+              >Home</a
+            >
+            <a
+              href="#about"
+              class="text-gray-300 hover:text-indigo-400 transition"
+              >About</a
+            >
+            <a
+              href="#skills"
+              class="text-gray-300 hover:text-indigo-400 transition"
+              >Skills</a
+            >
+            <a
+              href="#projects"
+              class="text-gray-300 hover:text-indigo-400 transition"
+              >Projects</a
+            >
+            <a
+              href="#experience"
+              class="text-gray-300 hover:text-indigo-400 transition"
+              >Experience</a
+            >
+            <a
+              href="#contact"
+              class="text-gray-300 hover:text-indigo-400 transition"
+              >Contact</a
+            >
+          </div>
         </div>
+
+        <div
+          class="border-t border-gray-700 dark:border-gray-800 mt-8 pt-8 text-center text-gray-400 dark:text-gray-500"
+        >
+          <p>&copy; {{currentYear}} Senthilkumar. All rights reserved.</p>
+        </div>
+      </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button
+      id="back-to-top"
+      class="z-50 fixed bottom-8 right-8 opacity-0 scale-0 w-14 h-14 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-indigo-600 dark:to-purple-700 hover:scale-110"
+    >
+      <svg
+        class="w-6 h-6 relative z-10"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 10l7-7m0 0l7 7m-7-7v18"
+        />
+      </svg>
 
+      <svg
+        id="progress-ring"
+        class="absolute inset-0 w-full h-full transform -rotate-90"
+        viewBox="0 0 100 100"
+      >
+        <circle
+          class="text-white/30"
+          stroke-width="4"
+          stroke="currentColor"
+          fill="transparent"
+          r="45"
+          cx="50"
+          cy="50"
+        />
+        <circle
+          id="progress-circle"
+          class="text-white"
+          stroke-width="4"
+          stroke="currentColor"
+          fill="transparent"
+          r="45"
+          cx="50"
+          cy="50"
+          stroke-dasharray="283"
+          stroke-dashoffset="283"
+        />
+      </svg>
+    </button>
 
-</body>
+    <script src="./public/app.js" defer></script>
+    <script src="./public/theme-toggle.js"></script>
+    <script src="./public/back_to_top.js"></script>
+    <script src="./public/scroll-animate.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const downloadButton = document.getElementById("downloadButton");
+
+        // Show download button after 5 seconds (Earth rotates continuously)
+        setTimeout(function () {
+          downloadButton.classList.remove("hidden");
+          downloadButton.classList.add("fade-in");
+        }, 5000);
+      });
+    </script>
+  </body>
 </html>
-
