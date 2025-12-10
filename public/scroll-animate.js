@@ -62,5 +62,5 @@
   setTimeout(() => {
     const animatedElements = document.querySelectorAll('.scroll-animate');
     animatedElements.forEach(el => observer.observe(el));
-  }, 500);
+  }, 300);
 })();

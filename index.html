@@ -11,49 +11,58 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <link rel="stylesheet" href="./output.css" />
     <link rel="stylesheet" href="./public/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
       .flip-card {
         perspective: 1000px;
-    }
+      }
 
-    .flip-card-inner {
+      .flip-card-inner {
         position: relative;
         width: 100%;
         height: 100%;
         transition: transform 0.8s;
         transform-style: preserve-3d;
         animation: autoFlip 10s infinite;
-    }
+      }
 
-    @keyframes autoFlip {
-        0%, 40% {
-            transform: rotateY(0deg);
+      @keyframes autoFlip {
+        0%,
+        40% {
+          transform: rotateY(0deg);
         }
-        50%, 90% {
-            transform: rotateY(180deg);
+        50%,
+        90% {
+          transform: rotateY(180deg);
         }
         100% {
-            transform: rotateY(360deg);
+          transform: rotateY(360deg);
         }
-    }
+      }
 
-    .flip-card-front, .flip-card-back {
+      .flip-card-front,
+      .flip-card-back {
         position: absolute;
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
-    }
+      }
 
-    .flip-card-back {
+      .flip-card-back {
         transform: rotateY(180deg);
-    }
+      }
 
-    /* Optional: Pause animation on hover */
-    .flip-card:hover .flip-card-inner {
+      /* Optional: Pause animation on hover */
+      .flip-card:hover .flip-card-inner {
         animation-play-state: paused;
-    }
+      }
 
       #back-to-top {
         transition: opacity 300ms ease, transform 300ms ease;
@@ -107,155 +116,164 @@
     </button>
 
     <!-- Navigation -->
-    <nav
-      class="bg-white dark:bg-gray-800 shadow-md fixed w-full z-10 border-b dark:border-gray-700"
-    >
-      <div class="container mx-auto px-4 py-3">
-        <div class="flex justify-between items-center">
-          <a
-            href="#"
-            class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 scroll-animate scroll-fade-left"
-            >SK</a
-          >
-          <div class="hidden md:flex space-x-8">
-            <a
-              href="#home"
-              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
-              >Home</a
-            >
-            <a
-              href="#about"
-              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
-              >About</a
-            >
-            <a
-              href="#skills"
-              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
-              >Skills</a
-            >
-            <a
-              href="#projects"
-              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
-              >Projects</a
-            >
-            <a
-              href="#experience"
-              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
-              >Experience</a
-            >
-            <a
-              href="#contact"
-              class="text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition scroll-animate scroll-fade-up"
-              >Contact</a
-            >
+    <nav id="navbar" class="bg-white dark:bg-gray-800 fixed w-full z-50 navbar-shadow transition-all duration-300">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex justify-between items-center">
+        <!-- Logo with gradient -->
+        <a href="#home" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent hover:scale-105 transition-transform">
+          SK
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400" data-section="home">Home</a>
+          <a href="#about" class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400" data-section="about">About</a>
+          <a href="#skills" class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400" data-section="skills">Skills</a>
+          <a href="#projects" class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400" data-section="projects">Projects</a>
+          <a href="#experience" class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400" data-section="experience">Experience</a>
+          <a href="#contact" class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400" data-section="contact">Contact</a>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden focus:outline-none text-gray-800 dark:text-gray-200">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
-          <button
-            class="md:hidden focus:outline-none text-gray-800 dark:text-gray-200"
-            ng-click="toggleMenu()"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
-          </button>
-        </div>
+        </button>
       </div>
-      <!-- Mobile menu -->
-      <div class="md:hidden" ng-show="mobileMenuOpen">
-        <div
-          class="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-800 shadow-lg"
-        >
-          <a
-            href="#home"
-            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
-            ng-click="toggleMenu()"
-            >Home</a
-          >
-          <a
-            href="#about"
-            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
-            ng-click="toggleMenu()"
-            >About</a
-          >
-          <a
-            href="#skills"
-            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
-            ng-click="toggleMenu()"
-            >Skills</a
-          >
-          <a
-            href="#projects"
-            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
-            ng-click="toggleMenu()"
-            >Projects</a
-          >
-          <a
-            href="#experience"
-            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
-            ng-click="toggleMenu()"
-            >Experience</a
-          >
-          <a
-            href="#contact"
-            class="block px-3 py-2 text-gray-800 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-md"
-            ng-click="toggleMenu()"
-            >Contact</a
-          >
-        </div>
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu md:hidden bg-white dark:bg-gray-800">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a href="#home" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="home">
+          <i class="fas fa-home w-5 inline-block"></i> Home
+        </a>
+        <a href="#about" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="about">
+          <i class="fas fa-user w-5 inline-block"></i> About
+        </a>
+        <a href="#skills" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="skills">
+          <i class="fas fa-code w-5 inline-block"></i> Skills
+        </a>
+        <a href="#projects" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="projects">
+          <i class="fas fa-folder w-5 inline-block"></i> Projects
+        </a>
+        <a href="#experience" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="experience">
+          <i class="fas fa-briefcase w-5 inline-block"></i> Experience
+        </a>
+        <a href="#contact" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="contact">
+          <i class="fas fa-envelope w-5 inline-block"></i> Contact
+        </a>
       </div>
-    </nav>
+    </div>
+  </nav>
 
     <!-- Hero Section -->
-   <section id="home" class="pt-24 md:pt-32 pb-16 md:pb-24 bg-gray-50 dark:bg-gray-900">
-    <div class="container mx-auto px-4">
+    <section
+      id="home"
+      class="relative pt-24 md:pt-32 pb-16 md:pb-24 bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden"
+      style="min-height: 100vh"
+    >
+      <img
+        src="./public/images/Ellipse 1.png"
+        class="-z-10 absolute -end-80 overflow-hidden"
+      />
+      <div class="container mx-auto px-4">
         <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-8 md:mb-0">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-gray-100 scroll-animate scroll-fade-left">Hi, I'm <span class="text-indigo-600 dark:text-indigo-400">Senthilkumar</span></h1>
-                <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-700 dark:text-gray-200 scroll-animate scroll-fade-left">FullStack Developer</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 scroll-animate scroll-fade-up">I build responsive, user-friendly web applications with modern technologies.</p>
-                <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 scroll-animate scroll-fade-up">This portfolio was built using HTML, CSS, Tailwind CSS, and Angular.</p>
-                <div class="flex space-x-4">
-                    <a href="#contact" class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-6 py-3 rounded-md transition scroll-animate scroll-scale-up">Contact Me</a>
-                    <a href="#projects" class="border border-indigo-600 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-800 px-6 py-3 rounded-md transition scroll-animate scroll-scale-up">View Projects</a>
-                </div>
+          <div class="md:w-1/2 mb-8 md:mb-0">
+            <h1
+              class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-gray-100 scroll-animate scroll-fade-left"
+            >
+              Hi, I'm
+              <span class="text-indigo-600 dark:text-indigo-400"
+                >Senthilkumar</span
+              >
+            </h1>
+            <h2
+              class="text-2xl md:text-3xl font-semibold mb-6 text-gray-700 dark:text-gray-200 scroll-animate scroll-fade-left"
+            >
+              <span id="typing-text"></span>
+              <span class="typing-cursor"> </span>
+            </h2>
+            <p
+              class="text-lg text-gray-600 dark:text-gray-400 mb-8 scroll-animate scroll-fade-up"
+            >
+              I build responsive, user-friendly web applications with modern
+              technologies.
+            </p>
+            <p
+              class="text-lg text-gray-600 dark:text-gray-400 mb-8 scroll-animate scroll-fade-up"
+            >
+              This portfolio was built using HTML, CSS, Tailwind CSS, and
+              Angular.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#contact"
+                class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-6 py-3 rounded-md transition scroll-animate scroll-scale-up"
+                >Contact Me</a
+              >
+              <a
+                href="#projects"
+                class="border border-indigo-600 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-800 px-6 py-3 rounded-md transition scroll-animate scroll-scale-up"
+                >View Projects</a
+              >
             </div>
-            <div class="md:w-1/2 flex justify-center scroll-animate scroll-fade-right">
-                <div class="flip-card w-64 h-64 md:w-80 md:h-80">
-                    <div class="flip-card-inner">
-                        <!-- Front Side - Profile Image -->
-                        <div class="flip-card-front">
-                            <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
-                                <img src="./public/images/profile.jpg" alt="Senthilkumar" class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover">
-                            </div>
-                        </div>
-                        <!-- Back Side - Download Button -->
-                        <div class="flip-card-back">
-                            <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-indigo-700 dark:to-purple-800 flex items-center justify-center shadow-2xl">
-                                <div class="text-center">
-                                    <svg class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                    </svg>
-                                    <a href="./public/Senthilkumar_FullStack_Resume.pdf" download="Senthilkumar_Resume.pdf" class="inline-block bg-white dark:bg-gray-900 text-indigo-600 dark:text-indigo-400 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg">
-                                        Download Resume
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+          </div>
+          <div
+            class="md:w-1/2 flex justify-center scroll-animate scroll-fade-right"
+          >
+            <div class="flip-card w-64 h-64 md:w-80 md:h-80">
+              <div class="flip-card-inner">
+                <!-- Front Side - Profile Image -->
+                <div class="flip-card-front">
+                  <div
+                    class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center"
+                  >
+                    <img
+                      src="./public/images/profile.jpg"
+                      alt="Senthilkumar"
+                      class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover"
+                    />
+                  </div>
+                </div>
+                <!-- Back Side - Download Button -->
+                <div class="flip-card-back">
+                  <div
+                    class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-indigo-700 dark:to-purple-800 flex items-center justify-center shadow-2xl"
+                  >
+                    <div class="text-center">
+                      <svg
+                        class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        ></path>
+                      </svg>
+                      <a
+                        href="./public/Senthilkumar_FullStack_Resume.pdf"
+                        download="Senthilkumar_Resume.pdf"
+                        class="inline-block bg-white dark:bg-gray-900 text-indigo-600 dark:text-indigo-400 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg"
+                      >
+                        Download Resume
+                      </a>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
     <!-- About Section -->
     <section id="about" class="py-16 bg-white dark:bg-gray-800">
@@ -687,7 +705,7 @@
               >Senthilkumar</a
             >
             <p class="text-gray-400 dark:text-gray-500 mt-2">
-              FullStack Developer
+              FullStack .Net Developer
             </p>
           </div>
 
@@ -785,6 +803,7 @@
     <script src="./public/theme-toggle.js"></script>
     <script src="./public/back_to_top.js"></script>
     <script src="./public/scroll-animate.js"></script>
+    <script src="./public/typing-effect.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const downloadButton = document.getElementById("downloadButton");
@@ -796,5 +815,74 @@
         }, 5000);
       });
     </script>
+    <script>
+    // Active navigation indication based on scroll position
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+    const navbar = document.getElementById('navbar');
+    
+    function updateActiveNav() {
+      let current = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (window.scrollY >= (sectionTop - 100)) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-section') === current) {
+          link.classList.add('active');
+        }
+      });
+      
+      // Add shadow to navbar on scroll
+      if (window.scrollY > 50) {
+        navbar.classList.add('navbar-scrolled');
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+      }
+    }
+    
+    window.addEventListener('scroll', updateActiveNav);
+    window.addEventListener('load', updateActiveNav);
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburger = mobileMenuBtn.querySelector('.hamburger');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+    });
+    
+    // Close mobile menu when clicking on a link
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+      });
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
   </body>
 </html>
