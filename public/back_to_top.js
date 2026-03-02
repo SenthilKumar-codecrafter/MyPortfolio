@@ -10,7 +10,7 @@ class NumberRotator {
     this.target = parseFloat(target);
     this.duration = duration;
     this.current = 0;
-    this.increment = this.target / (duration / 16); 
+    this.increment = this.target / (duration / 16);
     this.isAnimating = false;
     this.hasAnimated = false;
   }
@@ -94,10 +94,10 @@ class WebsiteController {
       headerHideDelay: 100,
       slideInterval: 5000,
       throttleDelay: 16,
-      observerThreshold: 0.3, 
+      observerThreshold: 0.3,
       observerMargin: "0px 0px -50px 0px",
       navigationCooldown: 1500,
-      rotatorObserverThreshold: 0.5, 
+      rotatorObserverThreshold: 0.5,
       rotatorObserverMargin: "0px 0px -100px 0px",
     };
 
@@ -169,7 +169,7 @@ class WebsiteController {
       const timeout = setTimeout(() => {
         path.style.transition = "stroke-dashoffset 1s ease-out";
         path.style.strokeDashoffset = "0";
-      }, delay * 200); 
+      }, delay * 200);
       timeouts.push(timeout);
     });
 
@@ -178,7 +178,7 @@ class WebsiteController {
       const timeout = setTimeout(() => {
         circle.style.transition = "opacity 0.5s ease-out";
         circle.style.opacity = "1";
-      }, delay * 200); 
+      }, delay * 200);
       timeouts.push(timeout);
     });
 
@@ -189,7 +189,7 @@ class WebsiteController {
 
     const nextCycleTimeout = setTimeout(() => {
       this.animateLoop(container);
-    }, totalAnimationTime + 1000); 
+    }, totalAnimationTime + 1000);
     timeouts.push(nextCycleTimeout);
 
     this.animationTimeouts.set(container, timeouts);
@@ -702,40 +702,19 @@ class WebsiteController {
         }
 
         if (currentScroll > 300) {
-          backToTopBtn.classList.remove(
-            "opacity-0",
-            "scale-0",
-            "translate-y-8"
-          );
-          backToTopBtn.classList.add(
-            "opacity-100",
-            "scale-100",
-            "translate-y-0"
-          );
+          backToTopBtn.classList.remove('opacity-0', 'scale-0', 'translate-y-8');
+          backToTopBtn.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+
+          // Set accessibility label
+          backToTopBtn.setAttribute('aria-label', 'Back to top');
+
           if (currentScroll > 300 && lastScrollPosition <= 300) {
-            backToTopBtn.classList.add("animate-bounce");
-            setTimeout(
-              () => backToTopBtn.classList.remove("animate-bounce"),
-              1000
-            );
-          }
-          const arrowIcon = backToTopBtn.querySelector("svg");
-          if (isNearBottom && arrowIcon) {
-            arrowIcon.classList.add("rotate-180");
-            arrowIcon.style.fill = "#c9b07a";
-            arrowIcon.style.transition = "fill 0.3s ease, transform 0.3s ease";
-          } else if (arrowIcon) {
-            arrowIcon.classList.remove("rotate-180");
-            arrowIcon.style.fill = "#a89262";
-            arrowIcon.style.transition = "fill 0.3s ease, transform 0.3s ease";
+            backToTopBtn.classList.add('animate-bounce');
+            setTimeout(() => backToTopBtn.classList.remove('animate-bounce'), 1000);
           }
         } else {
-          backToTopBtn.classList.add("opacity-0", "scale-0", "translate-y-8");
-          backToTopBtn.classList.remove(
-            "opacity-100",
-            "scale-100",
-            "translate-y-0"
-          );
+          backToTopBtn.classList.add('opacity-0', 'scale-0', 'translate-y-8');
+          backToTopBtn.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
         }
 
         lastScrollPosition = currentScroll;
@@ -750,7 +729,7 @@ class WebsiteController {
         backToTopBtn.classList.add("bg-[#a89262]");
       }, 150);
 
-      this.smoothScrollTo(0, 1000);
+      this.smoothScrollTo(0, 500);
     });
   }
 

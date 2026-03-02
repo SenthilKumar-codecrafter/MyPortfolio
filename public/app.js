@@ -16,104 +16,104 @@ app.controller("MainController", ($scope) => {
   $scope.selectedCategory = "All";
 
   $scope.skills = [
-  // ---------- Frontend ----------
-  {
-    name: "HTML5",
-    category: "Frontend",
-    icon: "public/images/html5-original.svg",
-  },
-  {
-    name: "CSS3",
-    category: "Frontend",
-    icon: "public/images/css3-original.svg",
-  },
-  {
-    name: "JavaScript",
-    category: "Frontend",
-    icon: "public/images/javascript-original.svg",
-  },
-  {
-    name: "Angular",
-    category: "Frontend",
-    icon: "public/images/angularjs-original.svg",
-  },
-  {
-    name: "Tailwind CSS",
-    category: "Frontend",
-    icon: "public/images/tailwindcss-logotype.a1069bda.svg",
-  },
-  {
-    name: "Bootstrap",
-    category: "Frontend",
-    icon: "public/images/bootstrap-original.svg",
-  },
+    // ---------- Frontend ----------
+    {
+      name: "HTML5",
+      category: "Frontend",
+      icon: "public/images/html5-original.svg",
+    },
+    {
+      name: "CSS3",
+      category: "Frontend",
+      icon: "public/images/css3-original.svg",
+    },
+    {
+      name: "JavaScript",
+      category: "Frontend",
+      icon: "public/images/javascript-original.svg",
+    },
+    {
+      name: "Angular",
+      category: "Frontend",
+      icon: "public/images/angularjs-original.svg",
+    },
+    {
+      name: "Tailwind CSS",
+      category: "Frontend",
+      icon: "public/images/tailwindcss-logotype.a1069bda.svg",
+    },
+    {
+      name: "Bootstrap",
+      category: "Frontend",
+      icon: "public/images/bootstrap-original.svg",
+    },
 
-  // ---------- Backend ----------
-  {
-    name: "ASP.NET Web API",
-    category: "Backend",
-    icon: "public/images/dotnetcore-original.svg",
-  },
-  {
-    name: "Blazor",
-    category: "Backend",
-    icon: "public/images/Blazor.png",
-  },
-  {
-    name: "Clean Architecture",
-    category: "Backend",
-    icon: "public/images/cleasn_archit.png",
-  },
-  {
-    name: "MVC Architecture",
-    category: "Backend",
-    icon: "public/images/model-view-controller.png",
-  },
+    // ---------- Backend ----------
+    {
+      name: "ASP.NET Web API",
+      category: "Backend",
+      icon: "public/images/dotnetcore-original.svg",
+    },
+    {
+      name: "Blazor",
+      category: "Backend",
+      icon: "public/images/Blazor.png",
+    },
+    {
+      name: "Clean Architecture",
+      category: "Backend",
+      icon: "public/images/cleasn_archit.png",
+    },
+    {
+      name: "MVC Architecture",
+      category: "Backend",
+      icon: "public/images/model-view-controller.png",
+    },
 
-  // ---------- Database ----------
-  {
-    name: "Oracle SQL",
-    category: "Database",
-    icon: "public/images/oracle-original.svg",
-  },
-  {
-    name: "MS SQL Server",
-    category: "Database",
-    icon: "public/images/microsoftsqlserver-plain.svg",
-  },
-  {
-    name: "MySQL",
-    category: "Database",
-    icon: "public/images/mysql-original.svg",
-  },
+    // ---------- Database ----------
+    {
+      name: "Oracle SQL",
+      category: "Database",
+      icon: "public/images/oracle-original.svg",
+    },
+    {
+      name: "MS SQL Server",
+      category: "Database",
+      icon: "public/images/microsoftsqlserver-plain.svg",
+    },
+    {
+      name: "MySQL",
+      category: "Database",
+      icon: "public/images/mysql-original.svg",
+    },
 
-  // ---------- Tools ----------
-  {
-    name: ".NET",
-    category: "Tools",
-    icon: "public/images/dotnetcore-original.svg",
-  },
-  {
-    name: "VS Code",
-    category: "Tools",
-    icon: "public/images/vscode-original.svg",
-  },
-  {
-    name: "Visual Studio",
-    category: "Tools",
-    icon: "public/images/visualstudio-plain.svg",
-  },
-  {
-    name: "Figma",
-    category: "Tools",
-    icon: "public/images/Figma-1-logo.png",
-  },
-  {
-    name: "Unit Testing",
-    category: "Tools",
-    icon: "public/images/testing.png",
-  },
-];
+    // ---------- Tools ----------
+    {
+      name: ".NET",
+      category: "Tools",
+      icon: "public/images/dotnetcore-original.svg",
+    },
+    {
+      name: "VS Code",
+      category: "Tools",
+      icon: "public/images/vscode-original.svg",
+    },
+    {
+      name: "Visual Studio",
+      category: "Tools",
+      icon: "public/images/visualstudio-plain.svg",
+    },
+    {
+      name: "Figma",
+      category: "Tools",
+      icon: "public/images/Figma-1-logo.png",
+    },
+    {
+      name: "Unit Testing",
+      category: "Tools",
+      icon: "public/images/testing.png",
+    },
+  ];
 
   $scope.filteredSkills = $scope.skills;
 

@@ -1,28 +1,29 @@
 // Scroll Animation Script
-(function() {
+(function () {
   'use strict';
 
   // Add animation classes to elements
   const animateOnScroll = () => {
     // Select all sections and their children
     const sections = document.querySelectorAll('section');
-    
+
     sections.forEach(section => {
       // Add animation class to section itself
       if (!section.classList.contains('scroll-animate')) {
         section.classList.add('scroll-animate', 'scroll-fade-up');
       }
-      
+
       // Add animation to specific elements within sections
       const animatableElements = section.querySelectorAll(
         'h2, h3, p, .grid > div, .flex > div, form, .border-l-2 > div, .max-w-3xl > p, .space-y-4 > div'
       );
-      
+
       animatableElements.forEach((el, index) => {
         if (!el.classList.contains('scroll-animate')) {
           el.classList.add('scroll-animate', 'scroll-fade-up');
-          // Add staggered delay
-          el.style.transitionDelay = `${index * 0.1}s`;
+          // Add staggered delay with a reasonable cap
+          const delay = Math.min(index * 0.05, 0.3);
+          el.style.transitionDelay = `${delay}s`;
         }
       });
     });
@@ -45,7 +46,7 @@
   // Initialize animations
   const init = () => {
     animateOnScroll();
-    
+
     // Observe all elements with scroll-animate class
     const animatedElements = document.querySelectorAll('.scroll-animate');
     animatedElements.forEach(el => observer.observe(el));
