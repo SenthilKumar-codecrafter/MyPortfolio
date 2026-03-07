@@ -1,6 +1,30 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+#navbar {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+
+#navbar.nav-hidden {
+  transform: translateY(-100%);
+}
+
+#navbar.navbar-scrolled {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom-color: rgba(99, 102, 241, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.dark #navbar.navbar-scrolled {
+  background-color: rgba(31, 41, 55, 0.85) !important;
+  border-bottom-color: rgba(139, 92, 246, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+
 /* Custom styles */
 html {
   scroll-behavior: smooth;
@@ -20,6 +44,10 @@ h6 {
 }
 
 /* Animation for skill items */
+section {
+  background: transparent !important;
+}
+
 #skills .grid>div {
   transition: transform 0.3s ease;
 }
@@ -92,85 +120,427 @@ textarea:focus {
 }
 
 /* ============================================
-   SCROLL ANIMATIONS
+   SCROLL ANIMATIONS (new interactive system)
    ============================================ */
 
-/* Base animation state - hidden */
-.scroll-animate {
-  opacity: 0;
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+/* Hidden base state used by new scroll-animate.js */
+.sa-hidden {
+  will-change: transform, opacity;
 }
 
-/* Fade up animation */
+/* Legacy compat — keep these so existing HTML classes don't break */
+.scroll-animate {
+  will-change: transform, opacity;
+}
+
 .scroll-fade-up {
   transform: translateY(30px);
+  opacity: 0;
 }
 
-/* Fade in from left */
 .scroll-fade-left {
   transform: translateX(-30px);
+  opacity: 0;
 }
 
-/* Fade in from right */
 .scroll-fade-right {
   transform: translateX(30px);
+  opacity: 0;
 }
 
-/* Scale up animation */
 .scroll-scale-up {
   transform: scale(0.95);
+  opacity: 0;
 }
 
-/* Visible state - triggered by intersection observer */
 .scroll-visible {
-  opacity: 1;
-  transform: translateY(0) translateX(0) scale(1);
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-/* Staggered animations for grid items */
-.grid>.scroll-animate:nth-child(1) {
-  transition-delay: 0s;
-}
-
-.grid>.scroll-animate:nth-child(2) {
-  transition-delay: 0.1s;
-}
-
-.grid>.scroll-animate:nth-child(3) {
-  transition-delay: 0.2s;
-}
-
-.grid>.scroll-animate:nth-child(4) {
-  transition-delay: 0.3s;
-}
-
-.grid>.scroll-animate:nth-child(5) {
-  transition-delay: 0.4s;
-}
-
-.grid>.scroll-animate:nth-child(6) {
-  transition-delay: 0.5s;
-}
-
-.grid>.scroll-animate:nth-child(7) {
-  transition-delay: 0.6s;
-}
-
-.grid>.scroll-animate:nth-child(8) {
-  transition-delay: 0.7s;
-}
-
-.grid>.scroll-animate:nth-child(9) {
-  transition-delay: 0.8s;
-}
-
-/* Reduce motion for users who prefer it */
+/* Reduce motion preference */
 @media (prefers-reduced-motion: reduce) {
-  .scroll-animate {
-    opacity: 1;
-    transform: none;
-    transition: none;
+
+  .scroll-animate,
+  .sa-hidden {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
+}
+
+/* ============================================
+   PARTICLES CANVAS
+   ============================================ */
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  /* never blocks clicks/interactions */
+  z-index: 0;
+  background-color: transparent;
+}
+
+/* Ensure sections sit above the fixed particle background */
+section {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+}
+
+/* hero section children must be above the canvas */
+#home>.container {
+  position: relative;
+  z-index: 2;
+}
+
+/* do NOT change z-index of the ellipse img — it has -z-10 from Tailwind */
+/* #home > img rule intentionally removed to preserve -z-10 Tailwind class */
+#home img[src*="Ellipse 1.png"] {
+  transition: opacity 0.5s ease;
+}
+
+.dark #home img[src*="Ellipse 1.png"] {
+  opacity: 0.35;
+}
+
+/* Enable mouse events on canvas for interactivity */
+#particles-canvas {
+  pointer-events: auto;
+}
+
+/* ============================================
+   TILT CARD
+   ============================================ */
+.tilt-card {
+  transform-style: preserve-3d;
+  transform: perspective(700px) rotateX(0) rotateY(0);
+  transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.3s ease;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.tilt-card:hover {
+  box-shadow: 0 20px 60px rgba(99, 102, 241, 0.18), 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 2;
+  transition: background 0.15s ease;
+}
+
+/* ============================================
+   MAGNETIC BUTTON
+   ============================================ */
+.magnetic-btn {
+  display: inline-block;
+  transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+/* ============================================
+   ACHIEVEMENTS SECTION
+   ============================================ */
+#achievements {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+}
+
+#achievements::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#achievements::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.achievement-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.08);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.dark .achievement-card {
+  background: rgba(30, 27, 75, 0.55);
+  border-color: rgba(139, 92, 246, 0.25);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.achievement-card:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 8px 36px rgba(99, 102, 241, 0.18);
+}
+
+/* Award badge/ribbon */
+.award-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.35);
+  margin-bottom: 0.75rem;
+}
+
+/* Achievement image wrapper */
+.achievement-img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  cursor: zoom-in;
+  border: 2px solid rgba(99, 102, 241, 0.15);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.achievement-img-wrap:hover {
+  border-color: rgba(99, 102, 241, 0.5);
+  transform: scale(1.02);
+}
+
+.achievement-img-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.achievement-img-wrap:hover img {
+  transform: scale(1.06);
+}
+
+.achievement-img-wrap .zoom-icon {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(99, 102, 241, 0.85);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.achievement-img-wrap:hover .zoom-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Trophy icon pulse */
+.trophy-pulse {
+  animation: trophyPulse 2.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes trophyPulse {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(-3deg);
+  }
+
+  50% {
+    transform: scale(1.15) rotate(3deg);
+  }
+}
+
+/* Glowing ring on achievement card top icon */
+.achievement-icon-ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 2px solid rgba(99, 102, 241, 0.25);
+  box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+  animation: ringPulse 3s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 12px rgba(99, 102, 241, 0);
+  }
+}
+
+.dark .achievement-icon-ring {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(167, 139, 250, 0.15));
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+/* Section heading decorative underline */
+.section-heading {
+  position: relative;
+  display: inline-block;
+}
+
+.section-heading span {
+  position: relative;
+  z-index: 1;
+}
+
+.section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1);
+  background-size: 200% auto;
+  border-radius: 4px;
+  animation: underlineLoop 3s linear infinite;
+}
+
+@keyframes underlineLoop {
+  0% {
+    background-position: 0% center;
+    transform: scaleX(0.8);
+  }
+
+  50% {
+    background-position: 100% center;
+    transform: scaleX(1.1);
+  }
+
+  100% {
+    background-position: 200% center;
+    transform: scaleX(0.8);
+  }
+}
+
+/* ============================================
+   LIGHTBOX
+   ============================================ */
+#achievement-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.88);
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(6px);
+}
+
+#achievement-lightbox.hidden {
+  display: none;
+}
+
+#achievement-lightbox.flex {
+  display: flex;
+}
+
+#achievement-lightbox img {
+  max-width: min(480px, 90vw);
+  max-height: 88vh;
+  border-radius: 16px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+  object-fit: contain;
+  animation: lbZoomIn 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes lbZoomIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.lb-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: background 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.lb-close:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* ============================================
+   STAT COUNTER
+   ============================================ */
+.stat-counter-wrap {
+  text-align: center;
+}
+
+.stat-counter {
+  font-size: 2.25rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  min-width: 4ch;
 }
 
 .nav-link {
@@ -195,13 +565,16 @@ textarea:focus {
   transform: translateX(-50%) scaleX(1);
 }
 
-.nav-link.active {
+.nav-link.active,
+#navbar .nav-link.active,
+.md\:flex .nav-link.active {
   color: #6366f1 !important;
-  font-weight: 600;
+  font-weight: 700 !important;
 }
 
-.dark .nav-link.active {
-  color: #818cf8;
+.dark .nav-link.active,
+.dark #navbar .nav-link.active {
+  color: #818cf8 !important;
 }
 
 /* Smooth navbar shadow on scroll */
@@ -288,4 +661,81 @@ textarea:focus {
 
 .hamburger.open span:nth-child(3) {
   transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Floating Tech Icons Animations */
+.tech-icon {
+  z-index: 20;
+}
+
+.floating-1 {
+  animation: float-1 6s ease-in-out infinite;
+}
+
+.floating-2 {
+  animation: float-2 7s ease-in-out infinite;
+}
+
+.floating-3 {
+  animation: float-3 8s ease-in-out infinite;
+}
+
+.floating-4 {
+  animation: float-4 9s ease-in-out infinite;
+}
+
+@keyframes float-1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(15px, -20px);
+  }
+}
+
+@keyframes float-2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-20px, -15px);
+  }
+}
+
+@keyframes float-3 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(20px, 15px);
+  }
+}
+
+@keyframes float-4 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-15px, 20px);
+  }
+}
+
+/* Adjust floating icon visibility on small screens */
+@media (max-width: 768px) {
+  .tech-icon img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }

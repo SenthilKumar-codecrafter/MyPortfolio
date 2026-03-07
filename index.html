@@ -91,6 +91,8 @@
       animation: rotateImage 1s ease-in-out;
     }
   </style>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%236366f1;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%238b5cf6;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23grad)' /%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' fill='white' font-family='Poppins, sans-serif' font-weight='bold' font-size='16'%3ESK%3C/text%3E%3C/svg%3E" />
   <script>
     (function () {
       const storedTheme = localStorage.getItem("theme");
@@ -101,8 +103,12 @@
   </script>
 </head>
 
-<body class="bg-red dark:bg-gray-900 text-gray-800 dark:text-gray-100 overflow-x-hidden" ng-app="portfolioApp"
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 overflow-x-hidden" ng-app="portfolioApp"
   ng-controller="MainController">
+
+  <!-- Full-Page Particle Canvas (fixed, behind everything) -->
+  <canvas id="particles-canvas"></canvas>
+
   <!-- Theme Toggle Button -->
   <button id="themeToggle"
     class="fixed z-50 top-72 right-6 w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-gray-700 dark:to-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110"
@@ -113,9 +119,16 @@
       class="fas fa-moon text-white text-lg absolute transition-all duration-300 transform -rotate-90 scale-0 dark:rotate-0 dark:scale-100"></i>
   </button>
 
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/917358803861" target="_blank"
+    class="fixed z-50 top-88 right-6 w-12 h-12 rounded-full bg-[#25D366] shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110"
+    aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+    <i class="fab fa-whatsapp text-white text-2xl"></i>
+  </a>
+
   <!-- Navigation -->
   <nav id="navbar" class="bg-white dark:bg-gray-800 fixed w-full z-50 navbar-shadow transition-all duration-300">
-    <div class="container mx-auto px-4 py-4">
+    <div class=" mx-auto max-w-8xl px-4 py-4">
       <div class="flex justify-between items-center">
         <!-- Logo with gradient -->
         <a href="#home"
@@ -124,29 +137,46 @@
         </a>
 
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center space-x-8">
+        <div class="hidden lg:flex space-x-8">
           <a href="#home"
-            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
-            data-section="home">Home</a>
+            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+            data-section="home">
+            <i class="fas fa-home mr-1"></i> Home
+          </a>
           <a href="#about"
-            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
-            data-section="about">About</a>
+            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+            data-section="about">
+            <i class="fas fa-user mr-1"></i> About
+          </a>
           <a href="#skills"
-            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
-            data-section="skills">Skills</a>
+            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+            data-section="skills">
+            <i class="fas fa-code mr-1"></i> Skills
+          </a>
           <a href="#projects"
-            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
-            data-section="projects">Projects</a>
+            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+            data-section="projects">
+            <i class="fas fa-project-diagram mr-1"></i> Projects
+          </a>
           <a href="#experience"
-            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
-            data-section="experience">Experience</a>
+            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+            data-section="experience">
+            <i class="fas fa-briefcase mr-1"></i> Experience
+          </a>
+          <a href="#achievements"
+            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+            data-section="achievements">
+            <i class="fas fa-trophy mr-1"></i> Achievements
+          </a>
           <a href="#contact"
-            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
-            data-section="contact">Contact</a>
+            class="nav-link text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+            data-section="contact">
+            <i class="fas fa-envelope mr-1"></i> Contact
+          </a>
         </div>
 
         <!-- Mobile Menu Button -->
-        <button id="mobile-menu-btn" class="md:hidden focus:outline-none text-gray-800 dark:text-gray-200">
+        <button id="mobile-menu-btn" class="lg:hidden focus:outline-none text-gray-800 dark:text-gray-200">
           <div class="hamburger">
             <span></span>
             <span></span>
@@ -157,7 +187,7 @@
     </div>
 
     <!-- Mobile Navigation -->
-    <div id="mobile-menu" class="mobile-menu md:hidden bg-white dark:bg-gray-800">
+    <div id="mobile-menu" class="mobile-menu lg:hidden bg-white dark:bg-gray-800">
       <div class="px-2 pt-2 pb-3 space-y-1">
         <a href="#home"
           class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all"
@@ -184,6 +214,11 @@
           data-section="experience">
           <i class="fas fa-briefcase w-5 inline-block"></i> Experience
         </a>
+        <a href="#achievements"
+          class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all"
+          data-section="achievements">
+          <i class="fas fa-trophy w-5 inline-block"></i> Achievements
+        </a>
         <a href="#contact"
           class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all"
           data-section="contact">
@@ -191,55 +226,74 @@
         </a>
       </div>
     </div>
+
   </nav>
 
   <!-- Hero Section -->
   <section id="home"
     class="relative pt-24 md:pt-32 pb-16 md:pb-24 bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden"
     style="min-height: 100vh">
-    <img src="./public/images/Ellipse 1.png" class="-z-10 absolute -end-80 overflow-hidden" />
+    <img src="./public/images/Ellipse 1.png" class="-z-10 absolute -end-80 overflow-hidden hidden md:block" />
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row items-center">
         <div class="md:w-1/2 mb-8 md:mb-0">
-          <h1
-            class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-gray-100 scroll-animate scroll-fade-left">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-gray-100">
             Hi, I'm
             <span class="text-indigo-600 dark:text-indigo-400">Senthilkumar</span>
           </h1>
-          <h2
-            class="text-2xl md:text-3xl font-semibold mb-6 text-gray-700 dark:text-gray-200 scroll-animate scroll-fade-left">
+          <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-700 dark:text-gray-200">
             <span id="typing-text"></span>
             <span class="typing-cursor"> </span>
           </h2>
-          <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 scroll-animate scroll-fade-up">
+          <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
             I build responsive, user-friendly web applications with modern
             technologies.
           </p>
-          <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 scroll-animate scroll-fade-up">
+          <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
             This portfolio was built using HTML, CSS, Tailwind CSS, and
             Angular.
           </p>
           <div class="flex space-x-4">
             <a href="#contact"
-              class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-6 py-3 rounded-md transition scroll-animate scroll-scale-up">Contact
+              class="magnetic-btn bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-6 py-3 rounded-md transition">Contact
               Me</a>
             <a href="#projects"
-              class="border border-indigo-600 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-800 px-6 py-3 rounded-md transition scroll-animate scroll-scale-up">View
+              class="magnetic-btn border border-indigo-600 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-800 px-6 py-3 rounded-md transition">View
               Projects</a>
           </div>
         </div>
-        <div class="md:w-1/2 flex justify-center scroll-animate scroll-fade-right">
-          <div class="flip-card w-64 h-64 md:w-80 md:h-80">
+        <div class="md:w-1/2 flex justify-center relative">
+          <!-- Floating Tech Icons -->
+          <div class="absolute inset-0 pointer-events-none z-20">
+            <div class="tech-icon floating-1 absolute top-0 left-0 lg:left-36">
+              <img src="public/images/dotnetcore-original.svg" alt=".NET"
+                class="w-12 h-12 md:w-14 md:h-14 bg-white dark:bg-gray-800 p-2 rounded-xl shadow-lg backdrop-blur-sm border border-white/20" />
+            </div>
+            <div class="tech-icon floating-2 absolute top-0 right-0 lg:right-20">
+              <img src="public/images/angularjs-original.svg" alt="Angular"
+                class="w-12 h-12 md:w-14 md:h-14 bg-white dark:bg-gray-800 p-2 rounded-xl shadow-lg backdrop-blur-sm border border-white/20" />
+            </div>
+            <div class="tech-icon floating-3 absolute bottom-0 left-0 lg:left-5">
+              <img src="public/images/Blazor.png" alt="Blazor"
+                class="w-12 h-12 md:w-14 md:h-14 bg-white dark:bg-gray-800 p-2 rounded-xl shadow-lg backdrop-blur-sm border border-white/20" />
+            </div>
+            <div class="tech-icon floating-4 absolute bottom-0 right-2 lg:-bottom-20 lg:right-36">
+              <img src="public/images/microsoftsqlserver-plain.svg" alt="MSSQL"
+                class="w-12 h-12 md:w-14 md:h-14 bg-white dark:bg-gray-800 p-2 rounded-xl shadow-lg backdrop-blur-sm border border-white/20" />
+            </div>
+          </div>
+
+          <div class="flip-card w-64 h-64 md:w-80 md:h-80 relative z-10">
             <div class="flip-card-inner">
               <!-- Front Side - Profile Image -->
               <div class="flip-card-front">
                 <div
                   class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
-                  <img src="./public/images/profile.jpg" alt="Senthilkumar"
-                    class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover" />
+                  <img src="./public/images/Profile/MyImage.jpeg" alt="Senthilkumar"
+                    class="w-64 h-64 md:w-80 md:h-80  rounded-full object-cover" />
                 </div>
               </div>
-              <!-- Back Side - Download Button -->
+              <!-- Back Side - Download Resume -->
               <div class="flip-card-back">
                 <div
                   class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-indigo-700 dark:to-purple-800 flex items-center justify-center shadow-2xl">
@@ -251,7 +305,7 @@
                       </path>
                     </svg>
                     <a href="./public/Senthilkumar_FullStack_Resume.pdf" download="Senthilkumar_Resume.pdf"
-                      class="inline-block bg-white dark:bg-gray-900 text-indigo-600 dark:text-indigo-400 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg">
+                      class="magnetic-btn inline-block bg-white dark:bg-gray-900 text-indigo-600 dark:text-indigo-400 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg">
                       Download Resume
                     </a>
                   </div>
@@ -266,28 +320,27 @@
 
   <!-- About Section -->
   <section id="about" class="py-16 bg-white dark:bg-gray-800">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">
-        About Me
-      </h2>
-      <div class="max-w-3xl mx-auto">
+    <div class=" mx-auto px-4">
+      <div class="w-full text-center">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100 section-heading">
+          <span>About Me</span>
+        </h2>
+      </div>
+      <div class="max-w-6xl mx-auto">
         <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
-          I am a passionate FullStack Developer with expertise in building
-          modern web applications. With a strong foundation in both frontend
-          and backend technologies, I create seamless, user-friendly
-          experiences that solve real-world problems.
+          Full Stack .NET Developer specializing in building scalable, high-performance web and cross-platform
+          applications using .NET MAUI, Blazor, ASP.NET Core, and SQL Server.
         </p>
         <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
-          My journey in web development started several years ago, and I've
-          since worked on various projects ranging from small business
-          websites to complex enterprise applications. I enjoy the challenge
-          of learning new technologies and implementing best practices in my
-          work.
+          At Focus Logic IT Solutions, I have delivered multiple enterprise and client projects with 100% on-time
+          completion, applying Clean Architecture, modular design, and performance optimization techniques. My work
+          includes Blazor Hybrid enterprise solutions, RESTful API integrations with high availability, and responsive
+          UI implementations using Tailwind CSS, Bootstrap, Fluent UI, and MudBlazor.
         </p>
         <p class="text-lg text-gray-700 dark:text-gray-300">
-          When I'm not coding, you can find me exploring new technologies,
-          contributing to open-source projects, or sharing my knowledge with
-          the developer community.
+          I focus on writing clean, maintainable code and designing systems that scale. I have hands-on experience
+          improving database performance, optimizing API responses, reducing application load times, and enhancing
+          overall user experience.
         </p>
       </div>
     </div>
@@ -296,11 +349,13 @@
   <!-- Skills Section -->
   <section id="skills" class="py-16 bg-gray-50 dark:bg-gray-900">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">
-        My Skills
-      </h2>
+      <div class="w-full text-center">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100 section-heading">
+          <span>My Skills</span>
+        </h2>
+      </div>
 
-      <div class="max-w-4xl mx-auto">
+      <div class="max-w-6xl mx-auto">
         <!-- Skill Categories -->
         <div class="flex flex-wrap justify-center mb-8">
           <button ng-repeat="category in skillCategories" ng-click="filterSkills(category)"
@@ -329,12 +384,15 @@
   <!-- Projects Section -->
   <section id="projects" class="py-16 bg-white dark:bg-gray-800">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">
-        My Projects
-      </h2>
+      <div class="w-full text-center">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100 section-heading">
+          <span>My Projects</span>
+        </h2>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div ng-repeat="project in projects"
-          class="bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition border border-gray-200 dark:border-gray-600">
+          class="tilt-card bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition border border-gray-200 dark:border-gray-600">
+          <div class="card-shine"></div>
           <div class="h-48 bg-gray-200 dark:bg-gray-600 relative">
             <img ng-src="{{project.image}}" alt="{{project.title}}" class="w-full h-full object-scale-down" />
           </div>
@@ -364,11 +422,13 @@
   <!-- Experience Section -->
   <section id="experience" class="py-16 bg-gray-50 dark:bg-gray-900">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">
-        Work Experience
-      </h2>
+      <div class="w-full text-center">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100 section-heading">
+          <span>Work Experience</span>
+        </h2>
+      </div>
 
-      <div class="max-w-3xl mx-auto">
+      <div class="max-w-6xl mx-auto">
         <div ng-repeat="job in experience"
           class="mb-12 relative pl-8 border-l-2 border-indigo-200 dark:border-indigo-800">
           <div class="absolute -left-2 top-0 w-4 h-4 rounded-full bg-indigo-600 dark:bg-indigo-500"></div>
@@ -395,14 +455,139 @@
     </div>
   </section>
 
+  <!-- Achievements Section -->
+  <section id="achievements" class="py-16 bg-white dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 section-heading">
+          <span>Achievements</span>
+        </h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-6 text-base max-w-xl mx-auto">
+          Recognition and awards that celebrate milestones in my professional journey.
+        </p>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="grid grid-cols-3 gap-6 max-w-2xl mx-auto mb-14">
+        <div
+          class="stat-counter-wrap p-4 rounded-xl bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600">
+          <span class="stat-counter" data-target="1" data-suffix="+">1+</span>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">Award</p>
+        </div>
+        <div
+          class="stat-counter-wrap p-4 rounded-xl bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600">
+          <span class="stat-counter" data-target="6" data-suffix="+">6+</span>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">Projects</p>
+        </div>
+        <div
+          class="stat-counter-wrap p-4 rounded-xl bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600">
+          <span class="stat-counter" data-target="98" data-suffix="%">98%</span>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">Client Satisfaction</p>
+        </div>
+      </div>
+
+      <!-- Achievement Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+        <!-- Card 1 -->
+        <div class="achievement-card tilt-card">
+          <div class="card-shine"></div>
+          <div class="flex items-start gap-4 mb-4">
+            <div class="achievement-icon-ring flex-shrink-0">
+              <span class="trophy-pulse text-3xl">🏆</span>
+            </div>
+            <div>
+              <span class="award-badge">
+                <i class="fas fa-certificate text-xs"></i> Official Recognition
+              </span>
+              <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 leading-tight">
+                Project Completion Award
+              </h3>
+              <p class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm mt-0.5">
+                Focuslogic IT Services
+              </p>
+            </div>
+          </div>
+
+          <!-- Two images side by side, both clickable for lightbox -->
+          <div class="flex gap-3 mb-4">
+            <div class="achievement-img-wrap flex-1 h-52" data-lightbox="./public/images/achievements/image1.jpeg">
+              <img src="./public/images/achievements/image1.jpeg"
+                alt="Project Completion Award - Focuslogic IT Services"
+                style="width:100%;height:100%;object-fit:cover;border-radius:12px;" />
+              <span class="zoom-icon"><i class="fas fa-expand"></i></span>
+            </div>
+            <div class="achievement-img-wrap flex-1 h-52" data-lightbox="./public/images/achievements/image2.jpeg">
+              <img src="./public/images/achievements/image2.jpeg" alt="Project Completion Award Certificate"
+                style="width:100%;height:100%;object-fit:cover;border-radius:12px;" />
+              <span class="zoom-icon"><i class="fas fa-expand"></i></span>
+            </div>
+          </div>
+
+          <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-3">
+            Recognized as a <strong>.NET Developer</strong> with the Project Completion Award for successfully
+            delivering
+            the project on time and to specification — demonstrating commitment, precision, and teamwork.
+          </p>
+
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span
+              class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs px-3 py-1 rounded-full font-medium">#ProjectCompletion</span>
+            <span
+              class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs px-3 py-1 rounded-full font-medium">#Dedication</span>
+            <span
+              class="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 text-xs px-3 py-1 rounded-full font-medium">#Teamwork</span>
+          </div>
+
+          <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+            <span class="text-xs text-gray-500 dark:text-gray-500"><i class="fas fa-calendar-alt mr-1"></i>December
+              2024</span>
+            <span class="text-xs text-gray-500 dark:text-gray-500"><i
+                class="fab fa-linkedin mr-1 text-blue-500"></i>LinkedIn Post</span>
+          </div>
+        </div>
+
+        <!-- Card 2 — More achievements placeholder styled card -->
+        <div class="achievement-card tilt-card flex flex-col items-center justify-center text-center"
+          style="min-height:300px;">
+          <div class="card-shine"></div>
+          <div
+            style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(139,92,246,0.18));display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;border:2px dashed rgba(99,102,241,0.3);">
+            <span style="font-size:2rem;">✨</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">More Coming Soon</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 max-w-xs">
+            Actively building and contributing — new achievements, certifications, and milestones on the way!
+          </p>
+          <div class="mt-4">
+            <a href="https://www.linkedin.com/in/senthilkumar-p-5304a2248?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              target="_blank"
+              class="magnetic-btn inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 text-sm font-semibold hover:underline">
+              <i class="fab fa-linkedin"></i> Follow on LinkedIn
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div id="achievement-lightbox" class="hidden" role="dialog" aria-modal="true">
+    <button class="lb-close" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+    <img src="" alt="Achievement" />
+  </div>
+
   <!-- Contact Section -->
   <section id="contact" class="py-16 bg-white dark:bg-gray-800">
-    <div class="container mx-auto px-4">
+    <div class=" mx-auto px-4">
       <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">
         Get In Touch
       </h2>
 
-      <div class="max-w-3xl mx-auto">
+      <div class="max-w-6xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
@@ -560,6 +745,7 @@
           <a href="#skills" class="text-gray-300 hover:text-indigo-400 transition">Skills</a>
           <a href="#projects" class="text-gray-300 hover:text-indigo-400 transition">Projects</a>
           <a href="#experience" class="text-gray-300 hover:text-indigo-400 transition">Experience</a>
+          <a href="#achievements" class="text-gray-300 hover:text-indigo-400 transition">Achievements</a>
           <a href="#contact" class="text-gray-300 hover:text-indigo-400 transition">Contact</a>
         </div>
       </div>
@@ -589,6 +775,7 @@
   <script src="./public/back_to_top.js"></script>
   <script src="./public/scroll-animate.js"></script>
   <script src="./public/typing-effect.js"></script>
+  <script src="./public/particles.js" defer></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const downloadButton = document.getElementById("downloadButton");

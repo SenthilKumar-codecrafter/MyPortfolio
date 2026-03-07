@@ -132,25 +132,28 @@ app.controller("MainController", ($scope) => {
     {
       title: "Simply Fresh – Multi-Platform App",
       description:
-        "Bilingual .NET MAUI application supporting both web and mobile with RESTful API integration and optimized data sync.",
+        "Bilingual .NET MAUI application featuring advanced data analytics (Pivot, GroupBy, Charts) and optimized RESTful API sync.",
       image: "./public/images/simply_fresh.svg",
-      technologies: [".NET MAUI", "C#", "REST API", "Localization"],
+      technologies: [".NET MAUI", "C#", "REST API", "Data Analytics"],
       details: [
         "Developed bilingual .NET MAUI application supporting web and mobile platforms",
-        "Implemented RESTful API integration with 99.9% uptime and optimized data synchronization",
-        "Built responsive mobile UI resulting in 35% increase in user engagement"
+        "Implemented advanced data reporting features including Pivot tables, GroupBy operations, and dynamic Charts based on row selection",
+        "Integrated RESTful API with 99.9% uptime and high-performance data synchronization",
+        "Optimized mobile UI resulting in a 35% increase in user engagement"
       ]
     },
     {
       title: "OETC – Blazor Hybrid Enterprise App",
       description:
-        "Architected a hybrid solution using Blazor Hybrid + Fluent UI with custom print templates and modular component architecture.",
+        "Enterprise Blazor Hybrid solution with real-time SignalR notifications, Brevo email integration, and comprehensive Time & Attendance management.",
       image: "./public/images/Oetc.png",
-      technologies: ["Blazor Hybrid", "Fluent UI", "JavaScript", "C#"],
+      technologies: ["Blazor Hybrid", "SignalR", "Brevo API", "Management Modules"],
       details: [
         "Architected responsive enterprise application using Blazor Hybrid and Fluent UI components",
-        "Designed custom print templates with JavaScript integration, reducing printing errors by 60%",
-        "Implemented modular component architecture improving code reusability by 45%"
+        "Implemented real-time internal notifications via SignalR and external automated email notifications using Brevo API",
+        "Built a dynamic email/SMS template creation and management system for event-driven communications",
+        "Developed integrated Timesheet and Attendance management modules",
+        "Designed custom print templates with JavaScript integration, reducing printing errors by 60%"
       ]
     },
     {
@@ -198,7 +201,7 @@ app.controller("MainController", ($scope) => {
       ]
     },
     {
-      title: "Static Websites (Laundry, Rogers, Asset Portal)",
+      title: "Static Websites (Ads Indiaa, Laundry, Rogers, Asset Portal)",
       description:
         "Delivered 3+ static websites with 100% Figma design accuracy and modern responsive UI.",
       image: "./public/images/freepik__plain-blank-static-websites-rogers-delivered-3-sta__4826.png",
@@ -211,6 +214,24 @@ app.controller("MainController", ($scope) => {
     },
   ];
 
+  // Calculate Professional Experience Tenure (from October 1, 2024)
+  const experienceStartDate = new Date(2024, 9, 1); // 9 is October in JS Date
+  const calculateTenure = () => {
+    const now = new Date();
+    let years = now.getFullYear() - experienceStartDate.getFullYear();
+    let months = now.getMonth() - experienceStartDate.getMonth();
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    let tenureStr = "";
+    if (years > 0) tenureStr += years + (years === 1 ? " Year " : " Years ");
+    if (months > 0) tenureStr += months + (months === 1 ? " Month" : " Months");
+    return tenureStr.trim() || "1 Month";
+  };
+
+  const currentTenure = calculateTenure();
+
   // -----------------------------------------
   //          EXPERIENCE SECTION
   // -----------------------------------------
@@ -218,7 +239,7 @@ app.controller("MainController", ($scope) => {
     {
       title: ".NET Developer",
       company: "Focus Logic IT Solutions",
-      period: "Octobar 2024 – Present | Ranipet, Tamil Nadu",
+      period: `Oct 2024 – Present (${currentTenure}) | Ranipet, Tamil Nadu`,
       description:
         "Working as a .NET Developer delivering cross-platform solutions, Blazor Hybrid apps, and enterprise applications.",
       responsibilities: [
