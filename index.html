@@ -103,8 +103,8 @@
   </script>
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 overflow-x-hidden" ng-app="portfolioApp"
-  ng-controller="MainController">
+<body style="user-select: none;" class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 overflow-x-hidden "
+  ng-app="portfolioApp" ng-controller="MainController">
 
   <!-- Full-Page Particle Canvas (fixed, behind everything) -->
   <canvas id="particles-canvas"></canvas>
@@ -770,6 +770,7 @@
     </svg>
   </button>
 
+  <script src="./public/protection.js"></script>
   <script src="./public/app.js" defer></script>
   <script src="./public/theme-toggle.js"></script>
   <script src="./public/back_to_top.js"></script>
