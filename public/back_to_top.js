@@ -486,39 +486,28 @@ class WebsiteController {
   }
 
   initHeaderScrollBehavior() {
-    const header = document.getElementById("main-header");
+    // Target the actual navbar wrapper in this portfolio
+    const header = document.getElementById('navbar-wrapper');
     if (!header) return;
 
-    header.classList.add("transition-all", "duration-300", "ease-in-out");
-
     window.addEventListener(
-      "scroll",
+      'scroll',
       this.throttle(() => {
         const currentScroll = window.pageYOffset;
         const scrollDelta = Math.abs(currentScroll - this.lastScroll);
 
         if (scrollDelta < this.config.scrollThreshold) return;
 
-        this.scrollDirection = currentScroll > this.lastScroll ? "down" : "up";
+        this.scrollDirection = currentScroll > this.lastScroll ? 'down' : 'up';
 
-        const shouldPreventHide = this.isScrolling;
-
-        if (currentScroll > 100) {
-          if (this.scrollDirection === "down" && !shouldPreventHide) {
-            header.classList.add("-translate-y-full", "shadow-none");
-            header.classList.remove("shadow-lg");
-          } else if (this.scrollDirection === "up") {
-            header.classList.remove("-translate-y-full");
-            header.classList.add("shadow-lg", "backdrop-blur-md");
+        if (currentScroll > 80) {
+          if (this.scrollDirection === 'down') {
+            header.classList.add('header-hidden');
+          } else {
+            header.classList.remove('header-hidden');
           }
-          header.classList.add("shadow-md");
         } else {
-          header.classList.remove(
-            "-translate-y-full",
-            "shadow-lg",
-            "backdrop-blur-md",
-            "shadow-md"
-          );
+          header.classList.remove('header-hidden');
         }
 
         this.lastScroll = currentScroll;
@@ -992,11 +981,9 @@ class WebsiteController {
     this.navigationClickTime = Date.now();
     this.isScrolling = true;
 
-    const header = document.getElementById("main-header");
+    const header = document.getElementById('navbar-wrapper');
     if (header) {
-      header.classList.remove("-translate-y-full");
-      header.classList.add("shadow-lg");
-      header.offsetHeight;
+      header.classList.remove('header-hidden');
     }
 
     let targetPosition;
@@ -1099,13 +1086,10 @@ class WebsiteController {
   }
 
   hideHeaderAfterNavigation() {
-    const header = document.getElementById("main-header");
+    const header = document.getElementById('navbar-wrapper');
     const currentScroll = window.pageYOffset;
-
-    // Hide header immediately if we're not at the top and not scrolling up
     if (currentScroll > 100 && header) {
-      header.classList.add("-translate-y-full", "shadow-none");
-      header.classList.remove("shadow-lg");
+      header.classList.add('header-hidden');
     }
   }
   goToSlide(index) {
@@ -1196,15 +1180,21 @@ document.addEventListener("DOMContentLoaded", () => {
             transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
         }
 
-        /* Active navigation styles */
+        /* Active navigation styles — indigo brand color */
         .nav-link.active,
         .mobile-nav-link.active,
         #companyDropdownBtn.active {
-            color: #c9b07a !important;
+            color: #6366f1 !important;
+        }
+
+        .dark .nav-link.active,
+        .dark .mobile-nav-link.active {
+            color: #818cf8 !important;
         }
     `;
   document.head.appendChild(style);
 });
+
 
 window.addEventListener("popstate", () => {
   const hash = window.location.hash.substring(1);

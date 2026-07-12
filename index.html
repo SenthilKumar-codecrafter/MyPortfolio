@@ -90,8 +90,7 @@
       animation: rotateImage 1s ease-in-out;
     }
   </style>
-  <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%236366f1;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%238b5cf6;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23grad)' /%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' fill='white' font-family='Poppins, sans-serif' font-weight='bold' font-size='16'%3ESK%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/png" href="./public/images/Profile/lightmode-logo.png" />
   <script>
     (function () {
       const storedTheme = localStorage.getItem("theme");
@@ -119,13 +118,15 @@
   </button>
 
   <!-- WhatsApp Floating Button -->
-  <a href="https://wa.me/917358803861?text=Hi%20Senthilkumar%2C%20I%20came%20across%20your%20portfolio%20and%20would%20love%20to%20connect!" target="_blank"
+  <a id="whatsapp-btn" href="https://wa.me/917358803861?text=Hi%20Senthilkumar%2C%20I%20came%20across%20your%20portfolio%20and%20would%20love%20to%20connect!" target="_blank"
     class="fixed z-50 top-88 right-6 w-12 h-12 rounded-full bg-[#25D366] shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110"
-    aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+    aria-label="Chat on WhatsApp" title="Chat on WhatsApp" style="position:fixed;">
     <i class="fab fa-whatsapp text-white text-2xl"></i>
+    <!-- Badge: static unread message count -->
+    <span style="position:absolute;top:-5px;right:-5px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.25);pointer-events:none;animation:badgePulse 2s ease-in-out infinite;">3</span>
   </a>
 <!-- Navigation -->
-<div id="navbar-wrapper" class="fixed w-full z-50 top-0 flex items-start  ps-0 py-0 gap-20 transition-all duration-300">
+<div id="navbar-wrapper" class="fixed w-full z-50 top-0 flex items-start justify-between lg:justify-normal  ps-0 py-0 gap-20 transition-all duration-300">
 
   <!-- Logo — rounded box -->
   <a href="#home" class="flex items-center gap-2 p-3   bg-white dark:bg-gray-800 hover:scale-105 transition-transform shrink-0">
@@ -174,32 +175,32 @@
     </button>
   </nav>
 
-  <!-- Mobile Navigation (kept full-width, drops below the row) -->
-  <div id="mobile-menu" class="mobile-menu lg:hidden bg-white dark:bg-gray-800 fixed top-24 left-0 w-full">
-    <div class="px-2 pt-2 pb-3 space-y-1">
-      <a href="#home" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="home">
-        <i class="fas fa-home w-5 inline-block"></i> Home
+  <!-- Mobile Navigation — compact dropdown, right-aligned -->
+  <div id="mobile-menu" class="mobile-menu lg:hidden bg-white dark:bg-gray-800">
+    <div class="px-2 pt-1 pb-2 space-y-0.5">
+      <a href="#home" class="mobile-nav-link flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="home">
+        <i class="fas fa-home w-4 text-indigo-500"></i> Home
       </a>
-      <a href="#about" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="about">
-        <i class="fas fa-user w-5 inline-block"></i> About
+      <a href="#about" class="mobile-nav-link flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="about">
+        <i class="fas fa-user w-4 text-indigo-500"></i> About
       </a>
-      <a href="#skills" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="skills">
-        <i class="fas fa-code w-5 inline-block"></i> Skills
+      <a href="#skills" class="mobile-nav-link flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="skills">
+        <i class="fas fa-code w-4 text-indigo-500"></i> Skills
       </a>
-      <a href="#projects" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="projects">
-        <i class="fas fa-folder w-5 inline-block"></i> Projects
+      <a href="#projects" class="mobile-nav-link flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="projects">
+        <i class="fas fa-folder w-4 text-indigo-500"></i> Projects
       </a>
-      <a href="#experience" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="experience">
-        <i class="fas fa-briefcase w-5 inline-block"></i> Experience
+      <a href="#experience" class="mobile-nav-link flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="experience">
+        <i class="fas fa-briefcase w-4 text-indigo-500"></i> Experience
       </a>
-      <a href="#achievements" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="achievements">
-        <i class="fas fa-trophy w-5 inline-block"></i> Achievements
+      <a href="#achievements" class="mobile-nav-link flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="achievements">
+        <i class="fas fa-trophy w-4 text-indigo-500"></i> Achievements
       </a>
-      <a href="#certifications" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="certifications">
-        <i class="fas fa-certificate w-5 inline-block"></i> Certifications
+      <a href="#certifications" class="mobile-nav-link flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="certifications">
+        <i class="fas fa-certificate w-4 text-indigo-500"></i> Certifications
       </a>
-      <a href="#contact" class="mobile-nav-link block px-4 py-3 text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="contact">
-        <i class="fas fa-envelope w-5 inline-block"></i> Contact
+      <a href="#contact" class="mobile-nav-link flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 rounded-md transition-all" data-section="contact">
+        <i class="fas fa-envelope w-4 text-indigo-500"></i> Contact
       </a>
     </div>
   </div>
@@ -213,7 +214,7 @@
     <!-- Pure CSS Background Sweep in New Color Combination (Indigo to Teal) -->
      <img src="./public/images/Ellipse 1.png" class="z-10 absolute -end-80 overflow-hidden hidden md:block" />
 
-    <div class="container mx-auto px-4 relative z-10">
+    <div class="container mx-auto px-4 relative z-10 mt-4 lg:mt-0">
       <div class="flex flex-col md:flex-row items-center">
         <div class="md:w-1/2 mb-8 md:mb-0">
           <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-gray-100">
@@ -1189,35 +1190,97 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-800 dark:bg-gray-950 text-white py-8 border-t dark:border-gray-800">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-4 md:mb-0 flex flex-col items-center md:items-start">
-          <a href="#" class="flex items-center gap-2 mb-2 hover:scale-105 transition-transform">
-            <img src="./public/images/Profile/lightmode-logo.png" class="h-10 w-auto dark:hidden" alt="SK Logo" />
-            <img src="./public/images/Profile/darkmode-logo.png" class="h-10 w-auto hidden dark:block" alt="SK Logo" />
-          </a>
-          <p class="text-gray-400 dark:text-gray-500 mt-1">
-            FullStack .Net Developer
+  <!-- Footer — Redesigned -->
+  <footer class="footer-gradient text-white">
+    <!-- Ambient glow orbs -->
+    <span class="footer-glow" style="width:320px;height:320px;background:#6366f1;top:-80px;left:-60px;"></span>
+    <span class="footer-glow" style="width:260px;height:260px;background:#8b5cf6;bottom:-60px;right:10%;"></span>
+    <span class="footer-glow" style="width:200px;height:200px;background:#06b6d4;top:30%;left:45%;"></span>
+
+    <div class="container mx-auto px-6 py-14 relative z-10">
+
+      <!-- ── Main grid ─────────────────────────────────────────────── -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+
+        <!-- Col 1 · Brand -->
+        <div>
+          <a href="#home" class="flex items-center gap-2 p-3 rounded-2xl mb-4 w-fit  bg-white dark:bg-gray-800 hover:scale-105 transition-transform shrink-0">
+    <img src="./public/images/Profile/lightmode-logo.png" class="h-20 w-20 dark:hidden" alt="SK Logo" />
+    <img src="./public/images/Profile/darkmode-logo.png" class="h-20 w-20 hidden dark:block" alt="SK Logo" />
+  </a>
+          <p class="text-sm text-white/60 leading-relaxed mb-4">
+            FullStack .NET Developer crafting elegant, performant web &amp; cross-platform applications.
           </p>
+          <!-- Social buttons -->
+          <div class="flex gap-3 mt-2">
+            <a href="https://www.linkedin.com/in/senthilkumar-software-developer" target="_blank"
+               class="footer-social-btn" title="LinkedIn">
+              <i class="fab fa-linkedin-in text-sm"></i>
+            </a>
+            <a href="https://github.com/SenthilKumar-codecrafter" target="_blank"
+               class="footer-social-btn" title="GitHub">
+              <i class="fab fa-github text-sm"></i>
+            </a>
+            <a href="https://wa.me/917358803861" target="_blank"
+               class="footer-social-btn" title="WhatsApp" style="border-color:rgba(37,211,102,0.4);background:rgba(37,211,102,0.08);">
+              <i class="fab fa-whatsapp text-sm"></i>
+            </a>
+            <a href="mailto:senthil@example.com"
+               class="footer-social-btn" title="Email">
+              <i class="fas fa-envelope text-sm"></i>
+            </a>
+          </div>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-4">
-          <a href="#home" class="text-gray-300 hover:text-indigo-400 transition">Home</a>
-          <a href="#about" class="text-gray-300 hover:text-indigo-400 transition">About</a>
-          <a href="#skills" class="text-gray-300 hover:text-indigo-400 transition">Skills</a>
-          <a href="#projects" class="text-gray-300 hover:text-indigo-400 transition">Projects</a>
-          <a href="#experience" class="text-gray-300 hover:text-indigo-400 transition">Experience</a>
-          <a href="#achievements" class="text-gray-300 hover:text-indigo-400 transition">Achievements</a>
-          <a href="#certifications" class="text-gray-300 hover:text-indigo-400 transition">Certifications</a>
-          <a href="#contact" class="text-gray-300 hover:text-indigo-400 transition">Contact</a>
+        <!-- Col 2 · Quick Links -->
+        <div>
+          <h4 class="text-xs font-semibold uppercase tracking-widest text-white/40 mb-4">Quick Links</h4>
+          <nav class="space-y-1">
+            <a href="#home"          class="footer-link"><i class="fas fa-chevron-right text-indigo-400 mr-2 text-xs"></i>Home</a>
+            <a href="#about"         class="footer-link"><i class="fas fa-chevron-right text-indigo-400 mr-2 text-xs"></i>About</a>
+            <a href="#skills"        class="footer-link"><i class="fas fa-chevron-right text-indigo-400 mr-2 text-xs"></i>Skills</a>
+            <a href="#projects"      class="footer-link"><i class="fas fa-chevron-right text-indigo-400 mr-2 text-xs"></i>Projects</a>
+            <a href="#experience"    class="footer-link"><i class="fas fa-chevron-right text-indigo-400 mr-2 text-xs"></i>Experience</a>
+            <a href="#achievements"  class="footer-link"><i class="fas fa-chevron-right text-indigo-400 mr-2 text-xs"></i>Achievements</a>
+            <a href="#certifications" class="footer-link"><i class="fas fa-chevron-right text-indigo-400 mr-2 text-xs"></i>Certifications</a>
+            <a href="#contact"       class="footer-link"><i class="fas fa-chevron-right text-indigo-400 mr-2 text-xs"></i>Contact</a>
+          </nav>
         </div>
+
+        <!-- Col 3 · Built With -->
+        <div>
+          <h4 class="text-xs font-semibold uppercase tracking-widest text-white/40 mb-4">Built With</h4>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="tech-chip"><i class="fab fa-html5 text-orange-400"></i> HTML5</span>
+            <span class="tech-chip"><i class="fab fa-css3-alt text-blue-400"></i> CSS3</span>
+            <span class="tech-chip"><i class="fab fa-js-square text-yellow-400"></i> JavaScript</span>
+            <span class="tech-chip"><i class="fab fa-angular text-red-400"></i> Angular</span>
+            <span class="tech-chip" style="color:rgba(255,255,255,0.65);">&#127774; Tailwind CSS</span>
+          </div>
+          <h4 class="text-xs font-semibold uppercase tracking-widest text-white/40 mb-3">Contact</h4>
+          <p class="text-sm text-white/55">
+            <i class="fas fa-map-marker-alt text-indigo-400 mr-2"></i>Ranipet, Tamil Nadu, India
+          </p>
+          <a href="tel:+917358803861" class="footer-link mt-1">
+            <i class="fas fa-phone text-indigo-400 mr-2"></i>+91 73588 03861
+          </a>
+        </div>
+
       </div>
 
-      <div class="border-t border-gray-700 dark:border-gray-800 mt-8 pt-8 text-center text-gray-400 dark:text-gray-500">
-        <p>&copy; {{currentYear}} Senthilkumar. All rights reserved.</p>
+      <!-- ── Divider -->
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(99,102,241,0.4),rgba(139,92,246,0.4),rgba(6,182,212,0.3),transparent);margin-bottom:1.5rem;"></div>
+
+      <!-- ── Copyright row -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="footer-copyright-text">
+          &copy; {{currentYear}} Senthilkumar &mdash; All rights reserved.
+        </p>
+        <p class="text-white/35 text-xs">
+          Crafted with <span style="color:#ef4444;">&#10084;</span> &amp; passion
+        </p>
       </div>
+
     </div>
   </footer>
 
@@ -1242,6 +1305,7 @@
   <script src="./public/scroll-animate.js"></script>
   <script src="./public/typing-effect.js"></script>
   <script src="./public/particles.js" defer></script>
+  <script src="./public/draggable-widgets.js" defer></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const downloadButton = document.getElementById("downloadButton");
@@ -1254,19 +1318,32 @@
     });
   </script>
   <script>
-    // Active navigation indication based on scroll position
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
-    const navbar = document.getElementById('navbar');
+    // ── Active navigation + scroll hide/show header ──────────────────────
+    const sections       = document.querySelectorAll('section[id]');
+    const navLinks       = document.querySelectorAll('.nav-link, .mobile-nav-link');
+    const navbar         = document.getElementById('navbar');
+    const navbarWrapper  = document.getElementById('navbar-wrapper');
+
+    let lastScrollY = window.scrollY;
+    let ticking     = false;
 
     function updateActiveNav() {
+      const currentY = window.scrollY;
+
+      // ── Hide/show header on scroll direction ────────────────────────
+      if (currentY > lastScrollY && currentY > 80) {
+        // Scrolling DOWN → hide
+        navbarWrapper.classList.add('header-hidden');
+      } else {
+        // Scrolling UP → show
+        navbarWrapper.classList.remove('header-hidden');
+      }
+      lastScrollY = currentY;
+
+      // ── Active section highlight ────────────────────────────────────
       let current = '';
-
       sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-
-        if (window.scrollY >= (sectionTop - 100)) {
+        if (window.scrollY >= (section.offsetTop - 100)) {
           current = section.getAttribute('id');
         }
       });
@@ -1278,50 +1355,63 @@
         }
       });
 
-      // Add shadow to navbar on scroll
+      // ── Navbar scrolled shadow ──────────────────────────────────────
       if (window.scrollY > 50) {
         navbar.classList.add('navbar-scrolled');
       } else {
         navbar.classList.remove('navbar-scrolled');
       }
+
+      ticking = false;
     }
 
-    window.addEventListener('scroll', updateActiveNav);
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateActiveNav);
+        ticking = true;
+      }
+    });
     window.addEventListener('load', updateActiveNav);
 
-    // Mobile menu toggle
+    // ── Mobile menu toggle ────────────────────────────────────────────
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const hamburger = mobileMenuBtn.querySelector('.hamburger');
+    const mobileMenu    = document.getElementById('mobile-menu');
+    const hamburger     = mobileMenuBtn.querySelector('.hamburger');
 
     mobileMenuBtn.addEventListener('click', () => {
+      // Position menu just below the navbar wrapper
+      const wrapperBottom = navbarWrapper.getBoundingClientRect().bottom;
+      mobileMenu.style.top = wrapperBottom + 'px';
       mobileMenu.classList.toggle('open');
       hamburger.classList.toggle('open');
     });
 
-    // Close mobile menu when clicking on a link
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-    mobileNavLinks.forEach(link => {
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
       link.addEventListener('click', () => {
         mobileMenu.classList.remove('open');
         hamburger.classList.remove('open');
       });
     });
 
-    // Smooth scrolling for anchor links
+    // ── Smooth scrolling for anchor links ─────────────────────────────
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
   </script>
+
+  <style>
+    /* Badge pulse animation */
+    @keyframes badgePulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.2); }
+    }
+  </style>
 </body>
 
 </html>
