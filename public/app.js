@@ -260,15 +260,49 @@ app.controller("MainController", ($scope) => {
 
   // Contact form
   $scope.formData = { name: "", email: "", message: "" };
+  $scope.formSubmitting = false;
+  $scope.formSuccess = false;
+  $scope.formError = false;
 
   $scope.submitForm = () => {
     if ($scope.contactForm.$valid) {
-      console.log("Form submitted:", $scope.formData);
-      alert("Thank you for your message! I will get back to you soon.");
+      $scope.formSubmitting = true;
+      $scope.formSuccess = false;
+      $scope.formError = false;
 
-      $scope.formData = { name: "", email: "", message: "" };
-      $scope.contactForm.$setPristine();
-      $scope.contactForm.$setUntouched();
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          access_key: "4c23f6e4-1a06-4eac-a091-ecedcce42188", // ← Replace with your key from web3forms.com
+          name: $scope.formData.name,
+          email: $scope.formData.email,
+          message: $scope.formData.message,
+          subject: "New Portfolio Contact from " + $scope.formData.name,
+          from_name: "Senthilkumar Portfolio",
+          replyto: $scope.formData.email
+        })
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            $scope.formSuccess = true;
+            $scope.formData = { name: "", email: "", message: "" };
+            $scope.contactForm.$setPristine();
+            $scope.contactForm.$setUntouched();
+            // Auto-hide success after 6 seconds
+            setTimeout(() => { $scope.formSuccess = false; $scope.$apply(); }, 6000);
+          } else {
+            $scope.formError = true;
+          }
+          $scope.formSubmitting = false;
+          $scope.$apply();
+        })
+        .catch(() => {
+          $scope.formError = true;
+          $scope.formSubmitting = false;
+          $scope.$apply();
+        });
     }
   };
 });
