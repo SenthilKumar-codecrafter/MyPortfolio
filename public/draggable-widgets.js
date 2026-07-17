@@ -12,9 +12,9 @@
   // ─── Widget registry ────────────────────────────────────────────────────
   // Each entry: { id, storageKey }
   const WIDGETS = [
-    { id: 'themeToggle',  storageKey: 'widget_pos_theme'    },
+    { id: 'themeToggle', storageKey: 'widget_pos_theme' },
     { id: 'whatsapp-btn', storageKey: 'widget_pos_whatsapp' },
-    { id: 'back-to-top',  storageKey: 'widget_pos_backtop'  },
+    { id: 'back-to-top', storageKey: 'widget_pos_backtop' },
   ];
 
   const SNAP_MARGIN = 16; // px from viewport edge after snap
@@ -25,7 +25,7 @@
   }
 
   function savePos(key, x, y) {
-    try { localStorage.setItem(key, JSON.stringify({ x, y })); } catch (_) {}
+    try { localStorage.setItem(key, JSON.stringify({ x, y })); } catch (_) { }
   }
 
   function loadPos(key) {
@@ -37,19 +37,19 @@
 
   // ─── Apply stored / default position ────────────────────────────────────
   function applyPosition(el, x, y) {
-    const rect  = el.getBoundingClientRect();
-    const maxX  = window.innerWidth  - rect.width  - 4;
-    const maxY  = window.innerHeight - rect.height - 4;
-    el.style.left   = clamp(x, 4, maxX) + 'px';
-    el.style.top    = clamp(y, 4, maxY) + 'px';
-    el.style.right  = 'auto';
+    const rect = el.getBoundingClientRect();
+    const maxX = window.innerWidth - rect.width - 4;
+    const maxY = window.innerHeight - rect.height - 4;
+    el.style.left = clamp(x, 4, maxX) + 'px';
+    el.style.top = clamp(y, 4, maxY) + 'px';
+    el.style.right = 'auto';
     el.style.bottom = 'auto';
   }
 
   // ─── Snap to nearest vertical edge ──────────────────────────────────────
   function snapToEdge(el) {
-    const rect  = el.getBoundingClientRect();
-    const midX  = rect.left + rect.width / 2;
+    const rect = el.getBoundingClientRect();
+    const midX = rect.left + rect.width / 2;
     const snapX = midX < window.innerWidth / 2
       ? SNAP_MARGIN
       : window.innerWidth - rect.width - SNAP_MARGIN;
@@ -62,7 +62,7 @@
   function makeDraggable(el, storageKey) {
     let startX, startY, startLeft, startTop;
     let dragging = false;
-    let moved    = false;
+    let moved = false;
 
     // Restore saved position
     const saved = loadPos(storageKey);
@@ -79,11 +79,11 @@
       // Only primary button
       if (e.type === 'mousedown' && e.button !== 0) return;
       dragging = true;
-      moved    = false;
+      moved = false;
 
       const rect = el.getBoundingClientRect();
       startLeft = rect.left;
-      startTop  = rect.top;
+      startTop = rect.top;
 
       if (e.type === 'touchstart') {
         startX = e.touches[0].clientX;
@@ -94,20 +94,20 @@
       }
 
       // Convert to absolute positioning relative to viewport
-      el.style.left   = startLeft + 'px';
-      el.style.top    = startTop  + 'px';
-      el.style.right  = 'auto';
+      el.style.left = startLeft + 'px';
+      el.style.top = startTop + 'px';
+      el.style.right = 'auto';
       el.style.bottom = 'auto';
 
-      el.style.cursor     = 'grabbing';
+      el.style.cursor = 'grabbing';
       el.style.transition = 'none';
       el.style.userSelect = 'none';
-      el.style.zIndex     = '9999';
+      el.style.zIndex = '9999';
 
       document.addEventListener('mousemove', onPointerMove, { passive: false });
-      document.addEventListener('mouseup',   onPointerUp);
+      document.addEventListener('mouseup', onPointerUp);
       document.addEventListener('touchmove', onPointerMove, { passive: false });
-      document.addEventListener('touchend',  onPointerUp);
+      document.addEventListener('touchend', onPointerUp);
     }
 
     // ── Pointer move ──────────────────────────────────────────────────────
@@ -132,11 +132,11 @@
       dragging = false;
 
       document.removeEventListener('mousemove', onPointerMove);
-      document.removeEventListener('mouseup',   onPointerUp);
+      document.removeEventListener('mouseup', onPointerUp);
       document.removeEventListener('touchmove', onPointerMove);
-      document.removeEventListener('touchend',  onPointerUp);
+      document.removeEventListener('touchend', onPointerUp);
 
-      el.style.cursor     = 'grab';
+      el.style.cursor = 'grab';
       el.style.userSelect = '';
       el.style.transition = '';
 
@@ -155,7 +155,7 @@
     }
 
     // ── Attach listeners ──────────────────────────────────────────────────
-    el.addEventListener('mousedown',  onPointerDown);
+    el.addEventListener('mousedown', onPointerDown);
     el.addEventListener('touchstart', onPointerDown, { passive: true });
 
     // Show drag hint on hover
