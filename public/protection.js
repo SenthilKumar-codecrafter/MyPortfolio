@@ -9,7 +9,7 @@
  * │  Set PROTECTION_ENABLED = false → allow inspect / DevTools │
  * └─────────────────────────────────────────────────────────────┘
  */
-const PROTECTION_ENABLED = false; // ← change to false to allow inspect
+const PROTECTION_ENABLED = true; // ← change to false to allow inspect
 
 if (PROTECTION_ENABLED) {
 
